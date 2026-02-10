@@ -17,9 +17,9 @@ class UserTest extends TestCase
     public function it_has_fillable_attributes()
     {
         $fillable = ['name', 'email', 'password'];
-        
-        $user = new User();
-        
+
+        $user = new User;
+
         $this->assertEquals($fillable, $user->getFillable());
     }
 
@@ -27,9 +27,9 @@ class UserTest extends TestCase
     public function it_hides_password_and_remember_token()
     {
         $hidden = ['password', 'remember_token'];
-        
-        $user = new User();
-        
+
+        $user = new User;
+
         $this->assertEquals($hidden, $user->getHidden());
     }
 
@@ -37,7 +37,7 @@ class UserTest extends TestCase
     public function it_casts_attributes_correctly()
     {
         $user = User::factory()->create();
-        
+
         $this->assertIsInt($user->id);
         $this->assertInstanceOf(CarbonInterface::class, $user->created_at);
         $this->assertInstanceOf(CarbonInterface::class, $user->updated_at);
@@ -47,9 +47,9 @@ class UserTest extends TestCase
     public function it_hashes_password_on_creation()
     {
         $user = User::factory()->create([
-            'password' => 'plain-text-password'
+            'password' => 'plain-text-password',
         ]);
-        
+
         $this->assertNotEquals('plain-text-password', $user->password);
         $this->assertTrue(Hash::check('plain-text-password', $user->password));
     }
@@ -62,9 +62,9 @@ class UserTest extends TestCase
             'email' => 'joao@example.com',
             'password' => Hash::make('password123'),
         ];
-        
+
         User::create($userData);
-        
+
         $this->assertDatabaseHas('users', [
             'name' => 'João Silva',
             'email' => 'joao@example.com',
@@ -75,9 +75,9 @@ class UserTest extends TestCase
     public function email_verified_at_can_be_null()
     {
         $user = User::factory()->create([
-            'email_verified_at' => null
+            'email_verified_at' => null,
         ]);
-        
+
         $this->assertNull($user->email_verified_at);
     }
 
@@ -85,9 +85,9 @@ class UserTest extends TestCase
     public function email_verified_at_is_cast_to_datetime()
     {
         $user = User::factory()->create([
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
         ]);
-        
+
         $this->assertInstanceOf(CarbonInterface::class, $user->email_verified_at);
     }
 }
