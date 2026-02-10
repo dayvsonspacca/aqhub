@@ -48,22 +48,6 @@ jobs:
     - name: Execute tests with coverage
       run: vendor/bin/pest --coverage --coverage-html=public
 
-    - name: Create simple index redirect
-      run: |
-        cat > public/index.html << 'EOF'
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta http-equiv="refresh" content="0; url=./index.html">
-            <title>Test Coverage Report</title>
-        </head>
-        <body>
-            <p>Redirecting to coverage report...</p>
-        </body>
-        </html>
-        EOF
-
     - name: Setup Pages
       uses: actions/configure-pages@v4
 
