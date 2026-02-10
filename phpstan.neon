@@ -4,11 +4,10 @@ includes:
 parameters:
     paths:
         - app/
-        - config/
         - database/
         - routes/
     
-    level: 5
+    level: 6
     
     excludePaths:
         - ./config/database.php
