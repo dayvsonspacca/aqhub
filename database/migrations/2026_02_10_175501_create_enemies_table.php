@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('enemies', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('level');
-            $table->integer('health');
-            $table->integer('difficulty');
+            $table->tinyInteger('level', unsigned: true);
+            $table->bigInteger('health', unsigned: true);
+            $table->tinyInteger('difficulty', unsigned: true);
             $table->timestamp('registered_at')->useCurrent();
             $table->timestamps();
         });
