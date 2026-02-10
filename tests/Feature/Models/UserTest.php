@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Hash;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-class UserTest extends TestCase
+final class UserTest extends TestCase
 {
     use RefreshDatabase;
 
     #[Test]
-    public function it_has_fillable_attributes()
+    public function it_has_fillable_attributes(): void
     {
         $fillable = ['name', 'email', 'password'];
 
@@ -24,7 +24,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function it_hides_password_and_remember_token()
+    public function it_hides_password_and_remember_token(): void
     {
         $hidden = ['password', 'remember_token'];
 
@@ -34,7 +34,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function it_casts_attributes_correctly()
+    public function it_casts_attributes_correctly(): void
     {
         $user = User::factory()->create();
 
@@ -44,7 +44,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function it_hashes_password_on_creation()
+    public function it_hashes_password_on_creation(): void
     {
         $user = User::factory()->create([
             'password' => 'plain-text-password',
@@ -55,7 +55,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function it_can_be_created_with_valid_data()
+    public function it_can_be_created_with_valid_data(): void
     {
         $userData = [
             'name' => 'João Silva',
@@ -72,7 +72,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function email_verified_at_can_be_null()
+    public function email_verified_at_can_be_null(): void
     {
         $user = User::factory()->create([
             'email_verified_at' => null,
@@ -82,7 +82,7 @@ class UserTest extends TestCase
     }
 
     #[Test]
-    public function email_verified_at_is_cast_to_datetime()
+    public function email_verified_at_is_cast_to_datetime(): void
     {
         $user = User::factory()->create([
             'email_verified_at' => now(),
