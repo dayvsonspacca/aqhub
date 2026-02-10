@@ -8,6 +8,9 @@ use App\ValueObjects\Level;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @implements CastsAttributes<Level, int|Level|string|null>
+ */
 class LevelCast implements CastsAttributes
 {
     public function get(Model $model, string $key, mixed $value, array $attributes): ?Level
