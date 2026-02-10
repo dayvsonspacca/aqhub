@@ -1,0 +1,56 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+
+    name: Code Quality Checks
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.5
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-interaction --no-progress
+
+    - name: Check code style with Pint
+      run: vendor/bin/pint --test
+
+    - name: Run static analysis with PHPStan
+      run: vendor/bin/phpstan analyse --memory-limit=2G
+
+    - name: Check for security vulnerabilities
+      run: composer audit
+
+  dependency-check:
+    runs-on: ubuntu-latest
+    
+    name: Dependency Checks
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.3
+
+    - name: Validate composer.json
+      run: composer validate --strict
+
+    - name: Check for outdated dependencies
+      run: composer outdated --direct --strict
+      continue-on-error: true

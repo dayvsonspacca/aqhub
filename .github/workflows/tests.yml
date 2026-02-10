@@ -1,0 +1,49 @@
+name: Tests
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.5]
+
+    name: PHP ${{ matrix.php }} - Tests
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+        coverage: pcov
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-interaction --no-progress
+
+    - name: Copy environment file
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+    - name: Generate application key
+      run: php artisan key:generate
+
+    - name: Create database
+      run: |
+        mkdir -p database
+        touch database/database.sqlite
+
+    - name: Run database migrations
+      run: php artisan migrate --force
+
+    - name: Execute test suite
+      run: php artisan test --coverage --min=80

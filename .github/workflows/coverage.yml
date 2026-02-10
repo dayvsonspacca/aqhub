@@ -1,0 +1,157 @@
+name: Test Coverage Report
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.5
+        extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+        coverage: pcov
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-interaction --no-progress
+
+    - name: Copy environment file
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+    - name: Generate application key
+      run: php artisan key:generate
+
+    - name: Create database
+      run: |
+        mkdir -p database
+        touch database/database.sqlite
+
+    - name: Run database migrations
+      run: php artisan migrate --force
+
+    - name: Execute tests with coverage
+      run: vendor/bin/pest --coverage --coverage-html=public/coverage --coverage-clover=coverage.xml
+
+    - name: Generate coverage badge and index page
+      run: |
+        COVERAGE=$(php -r "
+          \$xml = simplexml_load_file('coverage.xml');
+          \$metrics = \$xml->project->metrics;
+          \$percentage = (\$metrics['coveredstatements'] / \$metrics['statements']) * 100;
+          echo number_format(\$percentage, 2);
+        ")
+        
+        mkdir -p public
+        
+        cat > public/index.html << EOF
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Test Coverage Report</title>
+            <style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body {
+                    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    min-height: 100vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    padding: 20px;
+                }
+                .container {
+                    background: white;
+                    border-radius: 20px;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                    padding: 60px;
+                    max-width: 600px;
+                    text-align: center;
+                }
+                h1 {
+                    color: #333;
+                    font-size: 2.5em;
+                    margin-bottom: 20px;
+                }
+                .coverage-badge {
+                    display: inline-block;
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 30px 50px;
+                    border-radius: 15px;
+                    font-size: 3em;
+                    font-weight: bold;
+                    margin: 30px 0;
+                    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+                }
+                .subtitle {
+                    color: #666;
+                    font-size: 1.2em;
+                    margin-bottom: 40px;
+                }
+                .link {
+                    display: inline-block;
+                    background: #667eea;
+                    color: white;
+                    padding: 15px 40px;
+                    border-radius: 10px;
+                    text-decoration: none;
+                    font-weight: 600;
+                    transition: transform 0.2s, box-shadow 0.2s;
+                    margin: 10px;
+                }
+                .link:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+                }
+                .footer {
+                    margin-top: 40px;
+                    color: #999;
+                    font-size: 0.9em;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>🎯 Test Coverage</h1>
+                <p class="subtitle">Laravel Project</p>
+                <div class="coverage-badge">$COVERAGE%</div>
+                <div>
+                    <a href="./coverage/index.html" class="link">📊 View Full Report</a>
+                </div>
+                <div class="footer">
+                    Updated on $(date '+%m/%d/%Y at %H:%M')
+                </div>
+            </div>
+        </body>
+        </html>
+        EOF
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v4
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'public'
+
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
