@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\Models\Enemy;
+use App\ValueObjects\Level;
 use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\DB;
 
@@ -12,7 +13,7 @@ final class CreateEnemy
 {
     public function __invoke(
         string $name,
-        int $level,
+        Level $level,
         int $health,
         int $difficulty,
         ?CarbonInterface $createdAt = null,

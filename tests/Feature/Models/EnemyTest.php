@@ -3,17 +3,18 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Enemy;
+use App\ValueObjects\Level;
 use Carbon\CarbonInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-class EnemyTest extends TestCase
+final class EnemyTest extends TestCase
 {
     use RefreshDatabase;
 
     #[Test]
-    public function it_has_fillable_attributes()
+    public function it_has_fillable_attributes(): void
     {
         $fillable = ['name', 'level', 'health', 'difficulty', 'created_at'];
 
@@ -22,13 +23,13 @@ class EnemyTest extends TestCase
     }
 
     #[Test]
-    public function it_casts_attributes_correctly()
+    public function it_casts_attributes_correctly(): void
     {
         $enemy = Enemy::factory()->create();
 
         $this->assertIsInt($enemy->id);
         $this->assertIsString($enemy->name);
-        $this->assertIsInt($enemy->level);
+        $this->assertInstanceOf(Level::class, $enemy->level);
         $this->assertIsInt($enemy->health);
         $this->assertIsInt($enemy->difficulty);
         $this->assertInstanceOf(CarbonInterface::class, $enemy->registered_at);
@@ -37,11 +38,11 @@ class EnemyTest extends TestCase
     }
 
     #[Test]
-    public function it_can_be_created_with_valid_data()
+    public function it_can_be_created_with_valid_data(): void
     {
         $userData = [
             'name' => 'Doomlord',
-            'level' => 1,
+            'level' => Level::from(1),
             'health' => 100,
             'difficulty' => 1,
         ];
@@ -58,7 +59,7 @@ class EnemyTest extends TestCase
     }
 
     #[Test]
-    public function it_has_correct_timestamps()
+    public function it_has_correct_timestamps(): void
     {
         $enemy = Enemy::factory()->create();
 
@@ -68,7 +69,7 @@ class EnemyTest extends TestCase
     }
 
     #[Test]
-    public function it_can_have_created_at_timestamp()
+    public function it_can_have_created_at_timestamp(): void
     {
         $enemy = Enemy::factory()->created()->create();
 

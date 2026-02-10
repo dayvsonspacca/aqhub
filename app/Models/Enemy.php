@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Casts\LevelCast;
+use App\ValueObjects\Level;
 use Carbon\CarbonInterface;
 use Database\Factories\EnemyFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property-read int $id
  * @property-read string $name
- * @property-read int $level
+ * @property-read Level $level
  * @property-read int $health
  * @property-read int $difficulty
  * @property-read CarbonInterface $registered_at
@@ -47,7 +49,7 @@ class Enemy extends Model
         return [
             'id' => 'integer',
             'name' => 'string',
-            'level' => 'integer',
+            'level' => LevelCast::class,
             'health' => 'integer',
             'difficulty' => 'integer',
             'registered_at' => 'datetime',

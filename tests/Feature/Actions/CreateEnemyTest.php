@@ -3,6 +3,7 @@
 namespace Tests\Feature\Actions;
 
 use App\Actions\CreateEnemy;
+use App\ValueObjects\Level;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 use function Illuminate\Support\now;
@@ -20,7 +21,7 @@ final class CreateEnemyTest extends TestCase
         $createEnemy = new CreateEnemy;
         $now = now();
 
-        $createEnemy('Goblin', 100, 1000, 5, $now);
+        $createEnemy('Goblin', Level::from(100), 1000, 5, $now);
 
         $this->assertDatabaseHas('enemies', [
             'name' => 'Goblin',
