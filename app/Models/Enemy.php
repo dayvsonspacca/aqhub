@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read Level $level
  * @property-read int $health
  * @property-read int $difficulty
+ * @property-read string $asset_name
  * @property-read CarbonInterface $registered_at
  * @property ?CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
@@ -37,6 +38,7 @@ class Enemy extends Model
         'level',
         'health',
         'difficulty',
+        'asset_name',
         'created_at',
     ];
 
@@ -53,6 +55,7 @@ class Enemy extends Model
             'level' => LevelCast::class,
             'health' => 'integer',
             'difficulty' => 'integer',
+            'asset_name' => 'string',
             'registered_at' => 'datetime',
             'updated_at' => 'datetime',
             'created_at' => 'datetime',

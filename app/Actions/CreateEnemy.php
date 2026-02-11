@@ -16,14 +16,16 @@ final class CreateEnemy
         Level $level,
         int $health,
         int $difficulty,
+        string $assetName,
         ?CarbonInterface $createdAt = null,
     ): void {
-        DB::transaction(function () use ($name, $level, $health, $difficulty, $createdAt) {
+        DB::transaction(function () use ($name, $level, $health, $difficulty, $assetName, $createdAt) {
             Enemy::create([
                 'name' => $name,
                 'level' => $level,
                 'health' => $health,
                 'difficulty' => $difficulty,
+                'asset_name' => $assetName,
                 'created_at' => $createdAt,
             ]);
         });

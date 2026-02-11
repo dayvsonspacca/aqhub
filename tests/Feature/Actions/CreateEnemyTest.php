@@ -21,13 +21,14 @@ final class CreateEnemyTest extends TestCase
         $createEnemy = new CreateEnemy;
         $now = now();
 
-        $createEnemy('Goblin', Level::from(100), 1000, 5, $now);
+        $createEnemy('Goblin', Level::from(100), 1000, 5, 'Draconian5.swf', $now);
 
         $this->assertDatabaseHas('enemies', [
             'name' => 'Goblin',
             'level' => 100,
             'health' => 1000,
             'difficulty' => 5,
+            'asset_name' => 'Draconian5.swf',
             'created_at' => $now,
         ]);
     }

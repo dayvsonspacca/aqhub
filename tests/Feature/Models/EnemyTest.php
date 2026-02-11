@@ -18,7 +18,7 @@ final class EnemyTest extends TestCase
     #[Test]
     public function it_has_fillable_attributes(): void
     {
-        $fillable = ['name', 'level', 'health', 'difficulty', 'created_at'];
+        $fillable = ['name', 'level', 'health', 'difficulty', 'asset_name', 'created_at'];
 
         $enemy = new Enemy;
         $this->assertEquals($fillable, $enemy->getFillable());
@@ -34,6 +34,7 @@ final class EnemyTest extends TestCase
         $this->assertInstanceOf(Level::class, $enemy->level);
         $this->assertIsInt($enemy->health);
         $this->assertIsInt($enemy->difficulty);
+        $this->assertIsString($enemy->asset_name);
         $this->assertInstanceOf(CarbonInterface::class, $enemy->registered_at);
         $this->assertInstanceOf(CarbonInterface::class, $enemy->updated_at);
         $this->assertNull($enemy->created_at);
@@ -47,6 +48,7 @@ final class EnemyTest extends TestCase
             'level' => Level::from(1),
             'health' => 100,
             'difficulty' => 1,
+            'asset_name' => 'Draconian5.swf',
         ];
 
         Enemy::create($userData);
@@ -56,6 +58,7 @@ final class EnemyTest extends TestCase
             'level' => 1,
             'health' => 100,
             'difficulty' => 1,
+            'asset_name' => 'Draconian5.swf',
             'created_at' => null,
         ]);
     }

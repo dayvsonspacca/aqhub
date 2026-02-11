@@ -31,6 +31,7 @@ class EnemyFactory extends Factory
             'level' => fake()->numberBetween(1, 100),
             'health' => fake()->numberBetween(50, 5000),
             'difficulty' => fake()->numberBetween(1, 10),
+            'asset_name' => 'Draconian5.swf',
             'created_at' => null,
             'registered_at' => fake()->dateTimeBetween('-1 year', 'now'),
             'updated_at' => fake()->dateTimeBetween('-1 year', 'now'),
