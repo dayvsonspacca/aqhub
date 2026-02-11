@@ -2,30 +2,22 @@
 
 namespace App\Models;
 
-use App\Casts\LevelCast;
-use App\ValueObjects\Level;
 use Carbon\CarbonInterface;
-use Database\Factories\EnemyFactory;
+use Database\Factories\EnemyPassiveFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property-read int $id
- * @property-read string $name
- * @property-read Level $level
- * @property-read int $health
- * @property-read int $difficulty
- * @property-read CarbonInterface $registered_at
- * @property ?CarbonInterface $created_at
+ * @property-read string $description
+ * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
-class Enemy extends Model
+class EnemyPassive extends Model
 {
-    /** @use HasFactory<EnemyFactory> */
+    /** @use HasFactory<EnemyPassiveFactory> */
     use HasFactory;
-
-    const CREATED_AT = null;
 
     /**
      * The attributes that are mass assignable.
@@ -33,11 +25,7 @@ class Enemy extends Model
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'level',
-        'health',
-        'difficulty',
-        'created_at',
+        'description',
     ];
 
     /**
@@ -49,20 +37,16 @@ class Enemy extends Model
     {
         return [
             'id' => 'integer',
-            'name' => 'string',
-            'level' => LevelCast::class,
-            'health' => 'integer',
-            'difficulty' => 'integer',
-            'registered_at' => 'datetime',
+            'description' => 'string',
             'updated_at' => 'datetime',
             'created_at' => 'datetime',
         ];
     }
 
-    public function passives(): BelongsToMany
+    public function enemies(): BelongsToMany
     {
         return $this->belongsToMany(
-            EnemyPassive::class,
+            Enemy::class,
             'enemy_passive_assignments'
         );
     }

@@ -3,8 +3,10 @@
 namespace Tests\Unit\Models;
 
 use App\Models\Enemy;
+use App\Models\EnemyPassive;
 use App\ValueObjects\Level;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -74,5 +76,28 @@ final class EnemyTest extends TestCase
         $enemy = Enemy::factory()->created()->create();
 
         $this->assertNotNull($enemy->created_at);
+    }
+
+    #[Test]
+    public function it_has_passives_relationship(): void
+    {
+        $enemy = Enemy::factory()->create();
+
+        $this->assertTrue(method_exists($enemy, 'passives'));
+        $this->assertInstanceOf(BelongsToMany::class, $enemy->passives());
+    }
+
+    #[Test]
+    public function it_can_have_passives(): void
+    {
+        $enemy = Enemy::factory()->create();
+        $passive = EnemyPassive::factory()->create();
+
+        $this->assertEmpty($enemy->passives);
+
+        $enemy->passives()->attach($passive);
+        $enemy->load('passives');
+
+        $this->assertTrue($enemy->passives->contains($passive));
     }
 }
