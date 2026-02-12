@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Models;
+namespace Tests\Feature\Models;
 
 use App\Models\Enemy;
 use App\Models\EnemyPassive;
