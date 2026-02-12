@@ -24,7 +24,7 @@ final class LevelCastTest extends TestCase
         $this->cast = new LevelCast;
         $this->model = new class extends Model
         {
-            protected $table = 'enemies';
+            protected $table = 'monsters';
         };
     }
 

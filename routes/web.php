@@ -3,4 +3,4 @@
 use Illuminate\Support\Facades\Route;
 
 Route::livewire('/', 'pages::users.index');
-Route::livewire('/enemies', 'pages::enemies.index');
+Route::livewire('/monsters', 'pages::monsters.index');

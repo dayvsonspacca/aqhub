@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enemy_passives', function (Blueprint $table) {
+        Schema::create('Monster_passives', function (Blueprint $table) {
             $table->id();
             $table->string('description')->unique();
             $table->timestamps();
         });
 
-        Schema::create('enemy_passive_assignments', function (Blueprint $table) {
+        Schema::create('Monster_passive_assignments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('enemy_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('enemy_passive_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('Monster_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('Monster_passive_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
 
-            $table->unique(['enemy_id', 'enemy_passive_id']);
+            $table->unique(['Monster_id', 'Monster_passive_id']);
         });
     }
 
@@ -32,7 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('enemy_passives');
-        Schema::dropIfExists('enemy_passive_assignments');
+        Schema::dropIfExists('Monster_passives');
+        Schema::dropIfExists('Monster_passive_assignments');
     }
 };

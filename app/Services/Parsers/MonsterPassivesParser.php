@@ -8,7 +8,7 @@ use Dom\HTMLDocument;
 use Dom\Node;
 use Illuminate\Support\Collection;
 
-final class EnemyPassivesParser
+final class MonsterPassivesParser
 {
     /** @return Collection<int, string> */
     public function parse(string $html): Collection

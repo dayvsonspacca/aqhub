@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('enemies', function (Blueprint $table) {
+        Schema::create('monsters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->tinyInteger('level', unsigned: true);
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('enemies');
+        Schema::dropIfExists('monsters');
     }
 };

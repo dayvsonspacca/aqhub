@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Services\Parsers;
 
-use App\Services\Parsers\EnemyPassivesParser;
+use App\Services\Parsers\MonsterPassivesParser;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-final class EnemyPassivesParserTest extends TestCase
+final class MonsterPassivesParserTest extends TestCase
 {
     #[Test]
     public function it_can_parse_abilities_in_p_before_ul(): void
     {
         $html = file_get_contents(__DIR__ . '/Fixtures/abilities_in_p_before_ul.html');
 
-        $parser = new EnemyPassivesParser;
+        $parser = new MonsterPassivesParser;
         $abilities = $parser->parse($html);
 
         $this->assertCount(1, $abilities);
@@ -27,7 +27,7 @@ final class EnemyPassivesParserTest extends TestCase
     {
         $html = file_get_contents(__DIR__ . '/Fixtures/abilities_as_strong_before_ul.html');
 
-        $parser = new EnemyPassivesParser;
+        $parser = new MonsterPassivesParser;
         $abilities = $parser->parse($html);
 
         $this->assertCount(1, $abilities);
@@ -39,7 +39,7 @@ final class EnemyPassivesParserTest extends TestCase
     {
         $html = '<div id="page-content"><p>No abilities here</p></div>';
 
-        $parser = new EnemyPassivesParser;
+        $parser = new MonsterPassivesParser;
         $abilities = $parser->parse($html);
 
         $this->assertEmpty($abilities);
@@ -50,7 +50,7 @@ final class EnemyPassivesParserTest extends TestCase
     {
         $html = file_get_contents(__DIR__ . '/Fixtures/abilities_in_p_before_ul_multiple.html');
 
-        $parser = new EnemyPassivesParser;
+        $parser = new MonsterPassivesParser;
         $abilities = $parser->parse($html);
 
         $this->assertCount(5, $abilities);
@@ -63,7 +63,7 @@ final class EnemyPassivesParserTest extends TestCase
     {
         $html = '<p><strong>Abilities:</strong></p><ul><li>Cannot be stunned.</li></ul>';
 
-        $parser = new EnemyPassivesParser;
+        $parser = new MonsterPassivesParser;
         $abilities = $parser->parse($html);
 
         $this->assertEmpty($abilities);
@@ -74,7 +74,7 @@ final class EnemyPassivesParserTest extends TestCase
     {
         $html = file_get_contents(__DIR__ . '/Fixtures/ability_before_br_in_strong.html');
 
-        $parser = new EnemyPassivesParser;
+        $parser = new MonsterPassivesParser;
         $abilities = $parser->parse($html);
 
         $this->assertCount(1, $abilities);

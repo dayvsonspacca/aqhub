@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Carbon\CarbonInterface;
-use Database\Factories\EnemyPassiveFactory;
+use Database\Factories\MonsterPassiveFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,9 +14,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
-class EnemyPassive extends Model
+class MonsterPassive extends Model
 {
-    /** @use HasFactory<EnemyPassiveFactory> */
+    /** @use HasFactory<MonsterPassiveFactory> */
     use HasFactory;
 
     /**
@@ -43,11 +43,11 @@ class EnemyPassive extends Model
         ];
     }
 
-    public function enemies(): BelongsToMany
+    public function monsters(): BelongsToMany
     {
         return $this->belongsToMany(
-            Enemy::class,
-            'enemy_passive_assignments'
+            Monster::class,
+            'Monster_passive_assignments'
         );
     }
 }

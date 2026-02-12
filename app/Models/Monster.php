@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Casts\LevelCast;
 use App\ValueObjects\Level;
 use Carbon\CarbonInterface;
-use Database\Factories\EnemyFactory;
+use Database\Factories\MonsterFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -21,9 +21,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property ?CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
-class Enemy extends Model
+class Monster extends Model
 {
-    /** @use HasFactory<EnemyFactory> */
+    /** @use HasFactory<MonsterFactory> */
     use HasFactory;
 
     const CREATED_AT = null;
@@ -65,8 +65,8 @@ class Enemy extends Model
     public function passives(): BelongsToMany
     {
         return $this->belongsToMany(
-            EnemyPassive::class,
-            'enemy_passive_assignments'
+            MonsterPassive::class,
+            'Monster_passive_assignments'
         );
     }
 }

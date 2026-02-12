@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Enemy;
+use App\Models\Monster;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Enemy>
+ * @extends Factory<Monster>
  */
-class EnemyFactory extends Factory
+class MonsterFactory extends Factory
 {
     /**
      * Define the model's default state.

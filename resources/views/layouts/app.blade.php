@@ -29,7 +29,7 @@
             <x-menu activate-by-route>
                 <x-menu-sub title="World">
                     <x-menu-item title="Locations" link="#" />
-                    <x-menu-item title="Enemies\Monsters" link="/enemies" />
+                    <x-menu-item title="Monsters" link="/monsters" />
                     <x-menu-item title="Factions" link="#" />
                     <x-menu-item title="Quests" link="#" />
                     <x-menu-item title="NPCs" link="#" />
