@@ -18,16 +18,7 @@ class MonsterFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->randomElement([
-                'Goblin',
-                'Orc',
-                'Troll',
-                'Dragon',
-                'Skeleton',
-                'Zombie',
-                'Vampire',
-                'Werewolf',
-            ]),
+            'name' => fake()->name(),
             'level' => fake()->numberBetween(1, 100),
             'health' => fake()->numberBetween(50, 5000),
             'difficulty' => fake()->numberBetween(1, 10),

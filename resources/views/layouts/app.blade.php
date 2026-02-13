@@ -8,7 +8,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen antialiased bg-base-200">
+<body class="min-h-screen antialiased bg-base-300">
 
     <x-nav sticky class="lg:hidden">
         <x-slot:brand>
@@ -22,46 +22,47 @@
     </x-nav>
 
     <x-main>
-        <x-slot:sidebar drawer="main-drawer" class="bg-base-100 lg:bg-inherit">
-
-            <x-app-brand class="px-5 pt-4" />
-
-            <x-menu activate-by-route>
-                <x-menu-sub title="World">
-                    <x-menu-item title="Locations" link="#" />
-                    <x-menu-item title="Monsters" link="/monsters" />
-                    <x-menu-item title="Factions" link="#" />
-                    <x-menu-item title="Quests" link="#" />
-                    <x-menu-item title="NPCs" link="#" />
-                    <x-menu-item title="Shops" link="#" />
-                </x-menu-sub>
-
-                <x-menu-sub title="Items">
-                    <x-menu-item title="Armors" link="#" />
-                    <x-menu-item title="Capes" link="#" />
-                    <x-menu-item title="Helmets" link="#" />
-                    <x-menu-sub title="Pets">
-                        <x-menu-item title="Normal" link="#" />
-                        <x-menu-item title="Combat" link="#" />
+        <x-slot:sidebar drawer="main-drawer" class="lg:bg-inherit">
+            <div class="bg-base-100 mt-5 p-5 rounded-2xl">
+                <x-app-brand class="px-5 pt-4" />
+    
+                <x-menu activate-by-route>
+                    <x-menu-sub title="World">
+                        <x-menu-item title="Locations" link="#" />
+                        <x-menu-item title="Monsters" link="/monsters" />
+                        <x-menu-item title="Factions" link="#" />
+                        <x-menu-item title="Quests" link="#" />
+                        <x-menu-item title="NPCs" link="#" />
+                        <x-menu-item title="Shops" link="#" />
                     </x-menu-sub>
-                    <x-menu-item title="Misc. Items" link="#" />
-                    <x-menu-item title="Grounds" link="#" />
-                    <x-menu-item title="Necklaces" link="#" />
-                    <x-menu-sub title="Weapons" link="#">
-                        <x-menu-item title="Axes" link="#" />
-                        <x-menu-item title="Bows" link="#" />
-                        <x-menu-item title="Daggers" link="#" />
-                        <x-menu-item title="Gauntlets" link="#" />
-                        <x-menu-item title="Guns" link="#" />
-                        <x-menu-item title="Maces" link="#" />
-                        <x-menu-item title="Polearms" link="#" />
-                        <x-menu-item title="Staffs" link="#" />
-                        <x-menu-item title="Swords" link="#" />
-                        <x-menu-item title="Wands" link="#" />
-                        <x-menu-item title="Whips" link="#" />
+    
+                    <x-menu-sub title="Items">
+                        <x-menu-item title="Armors" link="#" />
+                        <x-menu-item title="Capes" link="#" />
+                        <x-menu-item title="Helmets" link="#" />
+                        <x-menu-sub title="Pets">
+                            <x-menu-item title="Normal" link="#" />
+                            <x-menu-item title="Combat" link="#" />
+                        </x-menu-sub>
+                        <x-menu-item title="Misc. Items" link="#" />
+                        <x-menu-item title="Grounds" link="#" />
+                        <x-menu-item title="Necklaces" link="#" />
+                        <x-menu-sub title="Weapons" link="#">
+                            <x-menu-item title="Axes" link="#" />
+                            <x-menu-item title="Bows" link="#" />
+                            <x-menu-item title="Daggers" link="#" />
+                            <x-menu-item title="Gauntlets" link="#" />
+                            <x-menu-item title="Guns" link="#" />
+                            <x-menu-item title="Maces" link="#" />
+                            <x-menu-item title="Polearms" link="#" />
+                            <x-menu-item title="Staffs" link="#" />
+                            <x-menu-item title="Swords" link="#" />
+                            <x-menu-item title="Wands" link="#" />
+                            <x-menu-item title="Whips" link="#" />
+                        </x-menu-sub>
                     </x-menu-sub>
-                </x-menu-sub>
-            </x-menu>
+                </x-menu>
+            </div>
         </x-slot:sidebar>
 
         <x-slot:content>
