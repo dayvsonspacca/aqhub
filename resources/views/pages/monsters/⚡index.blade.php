@@ -68,7 +68,7 @@ new class extends Component
             <x-input placeholder="Search..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button class="btn-primary" label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" />
+            <x-button class="btn-secondary" label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" />
         </x-slot:actions>
     </x-header>
 
@@ -84,7 +84,7 @@ new class extends Component
 
         <x-slot:actions>
             <x-button label="Reset" icon="o-x-mark" wire:click="clear" spinner />
-            <x-button label="Done" icon="o-check" class="btn-primary" @click="$wire.drawer = false" />
+            <x-button label="Done" icon="o-check" class="btn-secondary" @click="$wire.drawer = false" />
         </x-slot:actions>
     </x-drawer>
 </livewire:main-container>
