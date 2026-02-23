@@ -3,7 +3,6 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Monster;
-use App\Models\MonsterPassive;
 use App\ValueObjects\Level;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
