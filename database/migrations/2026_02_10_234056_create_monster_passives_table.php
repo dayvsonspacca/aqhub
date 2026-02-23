@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Monster_passives', function (Blueprint $table) {
+        Schema::create('monster_passives', function (Blueprint $table) {
             $table->id();
             $table->string('description')->unique();
             $table->timestamps();
         });
 
-        Schema::create('Monster_passive_assignments', function (Blueprint $table) {
+        Schema::create('monster_passive_assignments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('Monster_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('Monster_passive_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('monster_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('monster_passive_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
 
-            $table->unique(['Monster_id', 'Monster_passive_id']);
+            $table->unique(['monster_id', 'monster_passive_id']);
         });
     }
 
@@ -32,7 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Monster_passives');
-        Schema::dropIfExists('Monster_passive_assignments');
+        Schema::dropIfExists('monster_passives');
+        Schema::dropIfExists('monster_passive_assignments');
     }
 };

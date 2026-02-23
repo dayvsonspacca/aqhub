@@ -66,7 +66,7 @@ class Monster extends Model
     {
         return $this->belongsToMany(
             MonsterPassive::class,
-            'Monster_passive_assignments'
+            'monster_passive_assignments'
         );
     }
 }
