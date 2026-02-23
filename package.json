@@ -13,6 +13,10 @@
         "daisyui": "^5.5.18",
         "laravel-vite-plugin": "^2.0.0",
         "tailwindcss": "^4.1.18",
-        "vite": "^7.0.7"
+        "vite": "^7.0.7",
+        "vite-plugin-static-copy": "^3.2.0"
+    },
+    "dependencies": {
+        "@ruffle-rs/ruffle": "^0.2.0-nightly.2026.2.23"
     }
 }

@@ -19,7 +19,7 @@
 
 /** daisyUI */
 @plugin "daisyui" {
-    themes: light --default, dracula --prefersdark;
+    themes: dracula --prefersdark --default;
 }
 
 /* maryUI */
