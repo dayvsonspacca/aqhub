@@ -23,7 +23,7 @@
 
     <x-main>
         <x-slot:sidebar drawer="main-drawer" class="lg:bg-inherit">
-            <div class="bg-base-100 mt-5 p-5 rounded-2xl">
+            <div class="bg-base-100 lg:mt-5 lg:p-5 lg:rounded-2xl">
                 <x-app-brand class="px-5 pt-4" />
     
                 <x-menu activate-by-route>

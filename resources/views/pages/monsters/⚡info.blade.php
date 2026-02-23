@@ -3,8 +3,7 @@
 use App\Models\Monster;
 use Livewire\Component;
 
-new class extends Component
-{
+new class extends Component {
     public Monster $monster;
     public ?Monster $previousMonster = null;
     public ?Monster $nextMonster = null;
@@ -22,12 +21,7 @@ new class extends Component
             'monster' => $this->monster,
             'previousMonster' => $this->previousMonster,
             'nextMonster' => $this->nextMonster,
-            'breadcrumbs' => [
-                ['label' => 'Home', 'link' => '/'],
-                ['label' => 'World'],
-                ['label' => 'Monsters', 'link' => '/monsters'],
-                ['label' => $this->monster->name]
-            ]
+            'breadcrumbs' => [['label' => 'Home', 'link' => '/'], ['label' => 'World'], ['label' => 'Monsters', 'link' => '/monsters'], ['label' => $this->monster->name]],
         ];
     }
 };
@@ -36,54 +30,22 @@ new class extends Component
     <x-breadcrumbs :items="$breadcrumbs" />
     <x-header title="{{ $monster->name }}" separator size="text-3xl" class="my-5">
         <x-slot:actions>
-            <x-button
-                icon="o-chevron-left"
-                class="btn-secondary"
-                :link="$previousMonster ? '/monsters/' . $previousMonster->id : null"
-                :disabled="!$previousMonster"
-                wire:navigate
-            />
-            <x-button
-                icon="o-chevron-right"
-                class="btn-secondary"
-                :link="$nextMonster ? '/monsters/' . $nextMonster->id : null"
-                :disabled="!$nextMonster"
-                wire:navigate
-            />
+            <x-button icon="o-chevron-left" class="btn-secondary" :link="$previousMonster ? '/monsters/' . $previousMonster->id : null" :disabled="!$previousMonster" wire:navigate />
+            <x-button icon="o-chevron-right" class="btn-secondary" :link="$nextMonster ? '/monsters/' . $nextMonster->id : null" :disabled="!$nextMonster" wire:navigate />
         </x-slot:actions>
     </x-header>
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 overflow-y-scroll">
         <div class="col-span-1" id="monster-swf"></div>
         <div class="col-span-1 flex flex-col gap-4">
 
-            {{-- Stats --}}
-            <div class="flex gap-4">
-                <x-stat
-                    title="Level"
-                    value="{{ $monster->level->value }}"
-                    icon="o-bolt"
-                />
-                <x-stat
-                    title="Health"
-                    value="{{ number_format($monster->health) }}"
-                    icon="o-heart"
-                />
-                <x-stat
-                    title="Difficulty"
-                    value="{{ $monster->difficulty }}"
-                    icon="o-fire"
-                />
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <x-stat class="col-span-3 md:col-span-1" title="Level" value="{{ $monster->level }}" icon="o-bolt" />
+                <x-stat class="col-span-3 md:col-span-1" title="Health" value="{{ number_format($monster->health) }}"
+                    icon="o-heart" />
+                <x-stat class="col-span-3 md:col-span-1" title="Difficulty" value="{{ $monster->difficulty }}"
+                    icon="o-fire" />
             </div>
-
-            @if($monster->passives->isNotEmpty())
-                <x-card title="Passives" shadow separator>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach($monster->passives as $passive)
-                            <x-badge :value="$passive->description" class="badge-primary" />
-                        @endforeach
-                    </div>
-                </x-card>
-            @endif
 
             <x-card title="Details" shadow separator>
                 <x-list-item :item="$monster" no-separator no-hover>
@@ -97,11 +59,24 @@ new class extends Component
             </x-card>
 
         </div>
+
+        @if ($monster->passives->isNotEmpty())
+            <div class="col-span-1 lg:col-span-2">
+                <x-card title="Passives" shadow separator>
+                    <div class="flex flex-wrap gap-2">
+                        @foreach ($monster->passives as $passive)
+                            <x-badge :value="$passive->description" class="badge-primary" />
+                        @endforeach
+                    </div>
+                </x-card>
+            </div>
+        @endif
+
     </div>
 </livewire:main-container>
 
 @script
-<script>
-    loadSwf('monster-swf', '/proxy/swf/monster/{{ $monster->asset_name }}');
-</script>
+    <script>
+        loadSwf('monster-swf', '/proxy/swf/monster/{{ $monster->asset_name }}');
+    </script>
 @endscript

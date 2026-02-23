@@ -40,3 +40,7 @@
 .mary-table-pagination button {
     @apply cursor-pointer
 }
+
+#monster-swf ruffle-player {
+    transform: translate(-60px, -30px);
+}
