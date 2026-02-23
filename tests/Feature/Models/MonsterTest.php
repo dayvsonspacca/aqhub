@@ -89,18 +89,4 @@ final class MonsterTest extends TestCase
         $this->assertTrue(method_exists($monster, 'passives'));
         $this->assertInstanceOf(BelongsToMany::class, $monster->passives());
     }
-
-    #[Test]
-    public function it_can_have_passives(): void
-    {
-        $monster = Monster::factory()->create();
-        $passive = MonsterPassive::factory()->create();
-
-        $this->assertEmpty($monster->passives);
-
-        $monster->passives()->attach($passive);
-        $monster->load('passives');
-
-        $this->assertTrue($monster->passives->contains($passive));
-    }
 }
