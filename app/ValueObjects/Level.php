@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\ValueObjects;
 
 use InvalidArgumentException;
+use Stringable;
 
-final readonly class Level
+final readonly class Level implements Stringable
 {
     public const MIN = 1;
 
@@ -46,5 +47,10 @@ final readonly class Level
     public function isMax(): bool
     {
         return $this->value === self::MAX;
+    }
+
+    public function __toString(): string
+    {
+        return (string) $this->value;
     }
 }
