@@ -16,4 +16,11 @@ window.RufflePlayer.config = {
     showSwfDownload: true
 };
 
-import('@ruffle-rs/ruffle');
+window.loadSwf = (containerId, swfUrl) => {
+    const ruffle = window.RufflePlayer.newest();
+    const player = ruffle.createPlayer();
+    const container = document.getElementById(containerId);
+    container.appendChild(player);
+    player.ruffle().load(swfUrl);
+    return player;
+};

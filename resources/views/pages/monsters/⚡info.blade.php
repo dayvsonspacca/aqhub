@@ -102,10 +102,6 @@ new class extends Component
 
 @script
 <script>
-    let ruffle = window.RufflePlayer.newest();
-    let player = ruffle.createPlayer();
-    let container = document.getElementById("monster-swf");
-    container.appendChild(player);
-    player.ruffle().load("/proxy/swf/monster/{{ $monster->asset_name }}");
+    loadSwf('monster-swf', '/proxy/swf/monster/{{ $monster->asset_name }}');
 </script>
 @endscript
