@@ -81,4 +81,12 @@ final class LevelTest extends TestCase
         $this->assertFalse(Level::from(50)->isMax());
         $this->assertFalse(Level::from(1)->isMax());
     }
+
+    #[Test]
+    public function it_can_be_cast_to_string(): void
+    {
+        $level = Level::from(75);
+
+        $this->assertSame('75', (string) $level);
+    }
 }
