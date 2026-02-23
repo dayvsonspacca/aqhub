@@ -14,12 +14,12 @@ final class MonsterAttacksParser extends AbstractMonsterParser
     public function parse(string $html): Collection
     {
         $dom = HTMLDocument::createFromString($html, LIBXML_NOERROR);
-        
+
         $hasMonstersVersions = $this->hasVersions($dom);
         if ($hasMonstersVersions) {
             throw new RuntimeException('Monster has versions, cannot parse attacks');
         }
-        
+
         $stringContent = $dom->body->textContent;
         $containsAttacks = str_contains($stringContent, 'Attacks:') || str_contains($stringContent, 'Attack:');
 

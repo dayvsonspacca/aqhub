@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 use RuntimeException;
 
 final class MonsterPassivesParser extends AbstractMonsterParser
-{   
+{
     private static array $knownAbilities = [
         'Cannot be stunned.',
     ];
