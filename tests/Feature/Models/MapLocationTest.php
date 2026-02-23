@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Models;
 
-use App\Models\MapLocation;
+use App\Models\Map;
 use Carbon\CarbonInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
-final class MapLocationTest extends TestCase
+final class MapTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -17,20 +17,20 @@ final class MapLocationTest extends TestCase
     {
         $fillable = ['name', 'join_name', 'created_at'];
 
-        $mapLocation = new MapLocation;
-        $this->assertEquals($fillable, $mapLocation->getFillable());
+        $map = new Map;
+        $this->assertEquals($fillable, $map->getFillable());
     }
 
     #[Test]
     public function it_casts_attributes_correctly(): void
     {
-        $mapLocation = MapLocation::factory()->create();
+        $map = Map::factory()->create();
 
-        $this->assertIsInt($mapLocation->id);
-        $this->assertIsString($mapLocation->name);
-        $this->assertNull($mapLocation->registered_at);
-        $this->assertInstanceOf(CarbonInterface::class, $mapLocation->created_at);
-        $this->assertInstanceOf(CarbonInterface::class, $mapLocation->updated_at);
+        $this->assertIsInt($map->id);
+        $this->assertIsString($map->name);
+        $this->assertNull($map->registered_at);
+        $this->assertInstanceOf(CarbonInterface::class, $map->created_at);
+        $this->assertInstanceOf(CarbonInterface::class, $map->updated_at);
     }
 
     #[Test]
@@ -41,9 +41,9 @@ final class MapLocationTest extends TestCase
             'join_name' => 'battleon',
         ];
 
-        MapLocation::create($data);
+        Map::create($data);
 
-        $this->assertDatabaseHas('map_locations', [
+        $this->assertDatabaseHas('map', [
             'name' => 'Battleon',
             'join_name' => 'battleon',
         ]);

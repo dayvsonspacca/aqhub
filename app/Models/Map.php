@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Carbon\CarbonInterface;
-use Database\Factories\MapLocationFactory;
+use Database\Factories\MapFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,9 +15,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
-class MapLocation extends Model
+class Map extends Model
 {
-    /** @use HasFactory<MapLocationFactory> */
+    /** @use HasFactory<MapFactory> */
     use HasFactory;
 
     /**

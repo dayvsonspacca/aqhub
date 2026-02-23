@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\MapLocation;
+use App\Models\Map;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<MapLocation>
+ * @extends Factory<Map>
  */
-class MapLocationFactory extends Factory
+class MapFactory extends Factory
 {
     /**
      * Define the model's default state.
