@@ -6,7 +6,6 @@ namespace App\Actions;
 
 use App\Models\Monster;
 use App\ValueObjects\Level;
-use Carbon\CarbonInterface;
 use Illuminate\Support\Facades\DB;
 
 final class CreateMonster
@@ -15,18 +14,14 @@ final class CreateMonster
         string $name,
         Level $level,
         int $health,
-        int $difficulty,
-        string $assetName,
-        ?CarbonInterface $createdAt = null,
+        string $assetName
     ): void {
-        DB::transaction(function () use ($name, $level, $health, $difficulty, $assetName, $createdAt) {
+        DB::transaction(function () use ($name, $level, $health, $assetName) {
             Monster::create([
                 'name' => $name,
                 'level' => $level,
                 'health' => $health,
-                'difficulty' => $difficulty,
                 'asset_name' => $assetName,
-                'created_at' => $createdAt,
             ]);
         });
     }

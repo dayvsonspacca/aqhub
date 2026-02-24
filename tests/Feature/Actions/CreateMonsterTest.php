@@ -21,15 +21,13 @@ final class CreateMonsterTest extends TestCase
         $createMonster = new CreateMonster;
         $now = now();
 
-        $createMonster('Goblin', Level::from(100), 1000, 5, 'Draconian5.swf', $now);
+        $createMonster('Goblin', Level::from(100), 1000, 'Draconian5.swf');
 
         $this->assertDatabaseHas('monsters', [
             'name' => 'Goblin',
             'level' => 100,
             'health' => 1000,
-            'difficulty' => 5,
             'asset_name' => 'Draconian5.swf',
-            'created_at' => $now,
         ]);
     }
 }

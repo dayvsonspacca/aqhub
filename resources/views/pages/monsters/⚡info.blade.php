@@ -43,7 +43,7 @@ new class extends Component {
                 <x-stat class="col-span-3 md:col-span-1" title="Level" value="{{ $monster->level }}" icon="o-bolt" />
                 <x-stat class="col-span-3 md:col-span-1" title="Health" value="{{ number_format($monster->health) }}"
                     icon="o-heart" />
-                <x-stat class="col-span-3 md:col-span-1" title="Difficulty" value="{{ $monster->difficulty }}"
+                <x-stat class="col-span-3 md:col-span-1" title="Difficulty" value="{{ $monster->difficulty ?? '--' }}"
                     icon="o-fire" />
             </div>
 

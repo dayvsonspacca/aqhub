@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read string $name
  * @property-read Level $level
  * @property-read int $health
- * @property-read int $difficulty
+ * @property-read ?int $difficulty
  * @property-read string $asset_name
  * @property-read CarbonInterface $registered_at
  * @property ?CarbonInterface $created_at
