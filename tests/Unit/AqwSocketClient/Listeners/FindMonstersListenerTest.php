@@ -22,7 +22,7 @@ final class FindMonstersListenerTest extends TestCase
     public function should_not_find_expected_event(): void
     {
         $event = new AreaJoinedEvent('battelon', 0, 1, [], []);
-        
+
         $this->listener->listen($event);
 
         $this->assertNull($this->listener->targetMapJoinedEvent);
@@ -32,7 +32,7 @@ final class FindMonstersListenerTest extends TestCase
     public function should_find_expected_event(): void
     {
         $event = new AreaJoinedEvent('lair', 0, 1, [], []);
-        
+
         $this->listener->listen($event);
 
         $this->assertNotNull($this->listener->targetMapJoinedEvent);

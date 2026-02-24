@@ -13,13 +13,14 @@ use AqwSocketClient\Events\PlayerInventoryLoadedEvent;
 use AqwSocketClient\Interfaces\EventInterface;
 use AqwSocketClient\Listeners\GlobalPlayerListener;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use Tests\TestCase;
 
 final class FindMonstersTranslatorTest extends TestCase
 {
     private GlobalPlayerListener $globalPlayerListener;
+
     private FindMonstersTranslator $translator;
+
     private string $joinName = 'lair';
 
     protected function setUp(): void
