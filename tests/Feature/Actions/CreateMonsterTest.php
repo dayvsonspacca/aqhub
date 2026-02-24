@@ -5,9 +5,6 @@ namespace Tests\Feature\Actions;
 use App\Actions\CreateMonster;
 use App\ValueObjects\Level;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-
-use function Illuminate\Support\now;
-
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
@@ -19,7 +16,6 @@ final class CreateMonsterTest extends TestCase
     public function it_creates_an_monster()
     {
         $createMonster = new CreateMonster;
-        $now = now();
 
         $createMonster('Goblin', Level::from(100), 1000, 'Draconian5.swf');
 
