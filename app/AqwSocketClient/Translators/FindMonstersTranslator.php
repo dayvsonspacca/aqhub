@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace App\AqwSocketClient\Translators;
 
-use AqwSocketClient\Commands\{LoadPlayerInventoryCommand, JoinMapCommand, LogoutCommand};
-use AqwSocketClient\Events\{PlayerInventoryLoadedEvent, AreaJoinedEvent};
-use AqwSocketClient\Interfaces\{EventInterface, CommandInterface, TranslatorInterface};
+use AqwSocketClient\Commands\JoinMapCommand;
+use AqwSocketClient\Commands\LoadPlayerInventoryCommand;
+use AqwSocketClient\Commands\LogoutCommand;
+use AqwSocketClient\Events\AreaJoinedEvent;
+use AqwSocketClient\Events\PlayerInventoryLoadedEvent;
+use AqwSocketClient\Interfaces\CommandInterface;
+use AqwSocketClient\Interfaces\EventInterface;
+use AqwSocketClient\Interfaces\TranslatorInterface;
 use AqwSocketClient\Listeners\GlobalPlayerListener;
 
 final class FindMonstersTranslator implements TranslatorInterface

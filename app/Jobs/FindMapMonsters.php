@@ -23,9 +23,11 @@ final class FindMapMonsters implements ShouldQueue
     use Queueable;
 
     public $tries = 1;
+
     public $timeout = 60;
+
     public $failOnTimeout = true;
-    
+
     public function __construct(
         public readonly Map $map
     ) {}
