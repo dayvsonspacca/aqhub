@@ -19,7 +19,7 @@ class MapFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'join_name' => mb_strtolower(fake()->unique()),
+            'join_name' => mb_strtolower(fake()->unique()->word()),
         ];
     }
 }
