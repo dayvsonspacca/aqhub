@@ -24,7 +24,7 @@ final class ConfigurationFactoryTest extends TestCase
         $token = 'testtoken';
         $join = 'battleon';
 
-        $configuration = ConfigurationFactory::forFindMapMonsters($username, $password, $token, $join);
+        $configuration = new ConfigurationFactory()->forFindMapMonsters($username, $password, $token, $join);
 
         $this->assertEquals($username, $configuration->username);
         $this->assertEquals($password, $configuration->password);

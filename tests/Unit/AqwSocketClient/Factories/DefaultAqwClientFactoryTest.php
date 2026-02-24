@@ -17,7 +17,7 @@ final class DefaultAqwClientFactoryTest extends TestCase
     {
         $factory = new DefaultAqwClientFactory;
 
-        $configuration = ConfigurationFactory::forFindMapMonsters('testuser', 'testpass', 'testtoken', 'battleon');
+        $configuration = new ConfigurationFactory()->forFindMapMonsters('testuser', 'testpass', 'testtoken', 'battleon');
         $client = $factory->create($configuration);
 
         $this->assertInstanceOf(Client::class, $client);
