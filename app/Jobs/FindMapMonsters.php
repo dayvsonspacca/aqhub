@@ -2,10 +2,12 @@
 
 namespace App\Jobs;
 
+use App\Actions\CreateMonster;
 use App\AqwSocketClient\Listeners\FindMonstersListener;
 use App\AqwSocketClient\Listeners\LoggerListener;
 use App\AqwSocketClient\Translators\FindMonstersTranslator;
 use App\Models\Map;
+use App\ValueObjects\Level;
 use AqwSocketClient\Client;
 use AqwSocketClient\Configuration;
 use AqwSocketClient\Interpreters\AreaInterpreter;
@@ -32,7 +34,7 @@ final class FindMapMonsters implements ShouldQueue
         public readonly Map $map
     ) {}
 
-    public function handle(): void
+    public function handle(CreateMonster $createMonster): void
     {
         $join = $this->map->join_name;
 
@@ -62,6 +64,12 @@ final class FindMapMonsters implements ShouldQueue
         $aqwClient->connect();
 
         Loop::run();
+
+        $monsters = $monsterListener->targetMapJoinedEvent->monsters;
+
+        foreach ($monsters as $monster) {
+            $createMonster($monster['name'], Level::from($monster['level']), $monster['hp'], $monster['asset_name']);
+        }
     }
 
     private function getAuthToken(string $username, string $password): string
