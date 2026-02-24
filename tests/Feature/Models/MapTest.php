@@ -43,7 +43,7 @@ final class MapTest extends TestCase
 
         Map::create($data);
 
-        $this->assertDatabaseHas('map', [
+        $this->assertDatabaseHas('maps', [
             'name' => 'Battleon',
             'join_name' => 'battleon',
         ]);
