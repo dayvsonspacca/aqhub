@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\Maps\Tables;
 
-use App\Jobs\FindMapMonsters;
+use App\Jobs\FindMapMonstersJob;
 use App\Models\Map;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
@@ -40,7 +40,7 @@ class MapsTable
                     ->icon(Heroicon::MagnifyingGlass)
                     ->requiresConfirmation()
                     ->action(function (Map $record) {
-                        FindMapMonsters::dispatch($record);
+                        FindMapMonstersJob::dispatch($record);
 
                         Notification::make()
                             ->title('The map monsters are being found. Please check the logs for more details.')

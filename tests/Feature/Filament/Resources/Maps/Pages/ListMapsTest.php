@@ -3,7 +3,7 @@
 namespace Tests\Feature\Filament\Resources\Maps\Pages;
 
 use App\Filament\Resources\Maps\Pages\ListMaps;
-use App\Jobs\FindMapMonsters;
+use App\Jobs\FindMapMonstersJob;
 use App\Models\Map;
 use Filament\Actions\Testing\TestAction;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -79,7 +79,7 @@ final class ListMapsTest extends TestCase
             ->callAction($findMonstersAction)
             ->assertNotified('The map monsters are being found. Please check the logs for more details.');
 
-        Queue::assertPushed(FindMapMonsters::class, function (FindMapMonsters $job) use ($map) {
+        Queue::assertPushed(FindMapMonstersJob::class, function (FindMapMonstersJob $job) use ($map) {
             return $job->map->is($map);
         });
     }
