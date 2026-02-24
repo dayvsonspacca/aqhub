@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Maps\Schemas;
 
-use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Schema;
 
@@ -16,9 +15,6 @@ class MapForm
                     ->required(),
                 TextInput::make('join_name')
                     ->required(),
-                DateTimePicker::make('registered_at')
-                    ->required()
-                    ->columnSpan(2),
             ]);
     }
 }

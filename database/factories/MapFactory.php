@@ -18,8 +18,8 @@ class MapFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->word(),
-            'join_name' => mb_strtolower($this->faker->word()),
+            'name' => fake()->word(),
+            'join_name' => mb_strtolower(fake()->word()),
         ];
     }
 }

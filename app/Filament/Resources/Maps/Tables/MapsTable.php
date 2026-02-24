@@ -23,15 +23,12 @@ class MapsTable
                 TextColumn::make('join_name')
                     ->searchable(),
                 TextColumn::make('registered_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->dateTime(),
                 TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->dateTime()
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->recordActions(ActionGroup::make([
