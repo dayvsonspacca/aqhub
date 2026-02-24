@@ -1,22 +1,23 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit\AqwSocketClient\Services;
 
-use App\AqwSocketClient\Services\AqwAuthService;
+use App\AqwSocketClient\Services\HttpAqwAuthService;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
 use Tests\TestCase;
 
-final class AqwAuthServiceTest extends TestCase
+final class HttpAqwAuthServiceTest extends TestCase
 {
-    private AqwAuthService $service;
+    private HttpAqwAuthService $service;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->service = new AqwAuthService;
+        $this->service = new HttpAqwAuthService;
     }
 
     #[Test]
