@@ -4,7 +4,9 @@ namespace App\Filament\Resources\Maps\Tables;
 
 use App\Jobs\FindMapMonsters;
 use App\Models\Map;
-use Filament\Actions\{Action, ActionGroup, EditAction};
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
