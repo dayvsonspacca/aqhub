@@ -14,7 +14,7 @@ use AqwSocketClient\Listeners\GlobalPlayerListener;
 
 final class ConfigurationFactory
 {
-    public static function forFindMapMonsters(string $username, string $password, string $token, string $join): Configuration
+    public function forFindMapMonsters(string $username, string $password, string $token, string $join): Configuration
     {
         $globalPlayerListener = new GlobalPlayerListener;
         $monsterListener = new FindMonstersListener($join);
