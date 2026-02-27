@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('health', unsigned: true);
             $table->tinyInteger('difficulty', unsigned: true)->nullable();
             $table->string('asset_name');
+            $table->string('asset_link');
             $table->timestamp('registered_at')->useCurrent();
             $table->timestamps();
         });

@@ -14,13 +14,15 @@ final class CreateMonster implements CreateMonsterContract
         string $name,
         Level $level,
         int $health,
-        string $assetName
+        string $assetName,
+        string $assetLink
     ): void {
         Monster::create([
             'name' => $name,
             'level' => $level,
             'health' => $health,
             'asset_name' => $assetName,
+            'asset_link' => $assetLink
         ]);
     }
 }

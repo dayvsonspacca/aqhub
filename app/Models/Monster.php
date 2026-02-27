@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read int $health
  * @property-read ?int $difficulty
  * @property-read string $asset_name
+ * @property-read string $asset_link
  * @property-read CarbonInterface $registered_at
  * @property ?CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
@@ -39,6 +40,7 @@ class Monster extends Model
         'health',
         'difficulty',
         'asset_name',
+        'asset_link',
         'created_at',
     ];
 
@@ -56,6 +58,7 @@ class Monster extends Model
             'health' => 'integer',
             'difficulty' => 'integer',
             'asset_name' => 'string',
+            'asset_link' => 'string',
             'registered_at' => 'datetime',
             'updated_at' => 'datetime',
             'created_at' => 'datetime',

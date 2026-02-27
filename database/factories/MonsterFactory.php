@@ -24,6 +24,7 @@ class MonsterFactory extends Factory
             'health' => fake()->numberBetween(50, 5000),
             'difficulty' => fake()->numberBetween(1, 5),
             'asset_name' => 'Draconian' . fake()->numberBetween(1, 5) . '.swf',
+            'asset_link' => 'Draconian' . fake()->numberBetween(1, 5),
             'created_at' => null,
             'registered_at' => fake()->dateTimeBetween('-1 year', 'now'),
             'updated_at' => fake()->dateTimeBetween('-1 year', 'now'),

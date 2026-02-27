@@ -48,7 +48,7 @@ final class FindMapMonstersJob implements ShouldQueue
         $monsters = $script->monsters();
 
         foreach ($monsters as $monster) {
-            $createMonster($monster->name->value, Level::from($monster->level->value), $monster->health->value, $monster->metadata->file);
+            $createMonster($monster->name->value, Level::from($monster->level->value), $monster->health->value, $monster->metadata->file, $monster->metadata->link);
         }
     }
 }
