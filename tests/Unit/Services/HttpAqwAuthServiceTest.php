@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\AqwSocketClient\Services;
+namespace Tests\Unit\Services;
 
-use App\AqwSocketClient\Services\HttpAqwAuthService;
+use App\Services\HttpAqwAuthService;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\Test;
 use RuntimeException;
