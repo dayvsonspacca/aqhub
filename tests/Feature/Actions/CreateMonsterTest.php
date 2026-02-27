@@ -17,13 +17,14 @@ final class CreateMonsterTest extends TestCase
     {
         $createMonster = new CreateMonster;
 
-        $createMonster('Goblin', Level::from(100), 1000, 'Draconian5.swf');
+        $createMonster('Goblin', Level::from(100), 1000, 'Draconian5.swf', 'Draconian5');
 
         $this->assertDatabaseHas('monsters', [
             'name' => 'Goblin',
             'level' => 100,
             'health' => 1000,
             'asset_name' => 'Draconian5.swf',
+            'asset_link' => 'Draconian5',
         ]);
     }
 }

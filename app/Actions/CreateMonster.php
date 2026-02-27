@@ -22,7 +22,7 @@ final class CreateMonster implements CreateMonsterContract
             'level' => $level,
             'health' => $health,
             'asset_name' => $assetName,
-            'asset_link' => $assetLink
+            'asset_link' => $assetLink,
         ]);
     }
 }
