@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Maps\Tables;
 
-use App\Jobs\FindMapMonsters;
+use App\Jobs\FindMapMonstersJob;
 use App\Models\Map;
-use Filament\Actions\{Action, ActionGroup, EditAction};
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
+use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
@@ -21,15 +23,12 @@ class MapsTable
                 TextColumn::make('join_name')
                     ->searchable(),
                 TextColumn::make('registered_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->dateTime(),
                 TextColumn::make('created_at')
                     ->dateTime()
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->dateTime()
-                    ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->recordActions(ActionGroup::make([
@@ -41,7 +40,7 @@ class MapsTable
                     ->icon(Heroicon::MagnifyingGlass)
                     ->requiresConfirmation()
                     ->action(function (Map $record) {
-                        FindMapMonsters::dispatch($record);
+                        FindMapMonstersJob::dispatch($record);
 
                         Notification::make()
                             ->title('The map monsters are being found. Please check the logs for more details.')

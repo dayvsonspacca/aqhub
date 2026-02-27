@@ -17,7 +17,7 @@ final class MonsterTest extends TestCase
     #[Test]
     public function it_has_fillable_attributes(): void
     {
-        $fillable = ['name', 'level', 'health', 'difficulty', 'asset_name', 'created_at'];
+        $fillable = ['name', 'level', 'health', 'difficulty', 'asset_name', 'asset_link', 'created_at'];
 
         $monster = new Monster;
         $this->assertEquals($fillable, $monster->getFillable());
@@ -34,6 +34,7 @@ final class MonsterTest extends TestCase
         $this->assertIsInt($monster->health);
         $this->assertIsInt($monster->difficulty);
         $this->assertIsString($monster->asset_name);
+        $this->assertIsString($monster->asset_link);
         $this->assertInstanceOf(CarbonInterface::class, $monster->registered_at);
         $this->assertInstanceOf(CarbonInterface::class, $monster->updated_at);
         $this->assertNull($monster->created_at);
@@ -48,6 +49,7 @@ final class MonsterTest extends TestCase
             'health' => 100,
             'difficulty' => 1,
             'asset_name' => 'Draconian5.swf',
+            'asset_link' => 'Draconian5',
         ];
 
         Monster::create($userData);
@@ -58,6 +60,7 @@ final class MonsterTest extends TestCase
             'health' => 100,
             'difficulty' => 1,
             'asset_name' => 'Draconian5.swf',
+            'asset_link' => 'Draconian5',
             'created_at' => null,
         ]);
     }

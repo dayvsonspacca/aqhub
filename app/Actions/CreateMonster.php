@@ -4,30 +4,25 @@ declare(strict_types=1);
 
 namespace App\Actions;
 
+use App\Actions\Contracts\CreateMonsterContract;
 use App\Models\Monster;
 use App\ValueObjects\Level;
-use Carbon\CarbonInterface;
-use Illuminate\Support\Facades\DB;
 
-final class CreateMonster
+final class CreateMonster implements CreateMonsterContract
 {
     public function __invoke(
         string $name,
         Level $level,
         int $health,
-        int $difficulty,
         string $assetName,
-        ?CarbonInterface $createdAt = null,
+        string $assetLink
     ): void {
-        DB::transaction(function () use ($name, $level, $health, $difficulty, $assetName, $createdAt) {
-            Monster::create([
-                'name' => $name,
-                'level' => $level,
-                'health' => $health,
-                'difficulty' => $difficulty,
-                'asset_name' => $assetName,
-                'created_at' => $createdAt,
-            ]);
-        });
+        Monster::create([
+            'name' => $name,
+            'level' => $level,
+            'health' => $health,
+            'asset_name' => $assetName,
+            'asset_link' => $assetLink,
+        ]);
     }
 }
