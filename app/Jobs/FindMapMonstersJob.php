@@ -6,6 +6,7 @@ use App\Actions\Contracts\CreateMonsterContract;
 use App\AqwSocketClient\Scripts\FindMapMonstersScript;
 use App\Models\Map;
 use App\Services\HttpAqwAuthService;
+use App\ValueObjects\Level;
 use AqwSocketClient\Clients\SocketClient;
 use AqwSocketClient\Scripts\LoginScript;
 use AqwSocketClient\Server;
@@ -45,5 +46,9 @@ final class FindMapMonstersJob implements ShouldQueue
         $client->disconnect();
 
         $monsters = $script->monsters();
+
+        foreach ($monsters as $monster) {
+            $createMonster($monster->name->value, Level::from($monster->level->value), $monster->health->value, $monster->metadata->file);
+        }
     }
 }
