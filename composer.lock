@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "86327fc58ff8e5cfe1c3626f6c1694b3",
+    "content-hash": "1dabc7fca3d0075397ea75c6d49d8060",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -617,16 +617,16 @@
         },
         {
             "name": "dayvsonspacca/aqw-socket-client",
-            "version": "v3.0.3",
+            "version": "v3.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dayvsonspacca/aqw-socket-client.git",
-                "reference": "dff3631e99dd204807d67ec20025965d2c53cb4d"
+                "reference": "636862579d0e8c1f6a55341613a995863cf3d03b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dayvsonspacca/aqw-socket-client/zipball/dff3631e99dd204807d67ec20025965d2c53cb4d",
-                "reference": "dff3631e99dd204807d67ec20025965d2c53cb4d",
+                "url": "https://api.github.com/repos/dayvsonspacca/aqw-socket-client/zipball/636862579d0e8c1f6a55341613a995863cf3d03b",
+                "reference": "636862579d0e8c1f6a55341613a995863cf3d03b",
                 "shasum": ""
             },
             "require-dev": {
@@ -652,9 +652,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dayvsonspacca/aqw-socket-client/issues",
-                "source": "https://github.com/dayvsonspacca/aqw-socket-client/tree/v3.0.3"
+                "source": "https://github.com/dayvsonspacca/aqw-socket-client/tree/v3.0.4"
             },
-            "time": "2026-02-28T15:35:08+00:00"
+            "time": "2026-02-28T17:17:54+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

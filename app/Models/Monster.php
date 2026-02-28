@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Casts\LevelCast;
-use App\ValueObjects\Level;
+use App\Casts\HealthCast;
+use App\Casts\Monster\MonsterLevelCast;
+use App\Casts\Monster\MonsterNameCast;
 use Carbon\CarbonInterface;
 use Database\Factories\MonsterFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,7 +39,6 @@ class Monster extends Model
         'name',
         'level',
         'health',
-        'difficulty',
         'asset_name',
         'asset_link',
         'created_at',
@@ -53,10 +53,9 @@ class Monster extends Model
     {
         return [
             'id' => 'integer',
-            'name' => 'string',
-            'level' => LevelCast::class,
-            'health' => 'integer',
-            'difficulty' => 'integer',
+            'name' => MonsterNameCast::class,
+            'level' => MonsterLevelCast::class,
+            'health' => HealthCast::class,
             'asset_name' => 'string',
             'asset_link' => 'string',
             'registered_at' => 'datetime',

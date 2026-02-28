@@ -25,8 +25,8 @@ new class extends Component
     public function headers(): array
     {
         return [
-            ['key' => 'name', 'label' => 'Name'],
-            ['key' => 'health', 'label' => 'Health'],
+            ['key' => 'name.value', 'label' => 'Name'],
+            ['key' => 'health.value', 'label' => 'Health'],
             ['key' => 'level.value', 'label' => 'Level']
         ];
     }

@@ -62,7 +62,7 @@ new class extends Component {
         <div class="col-span-1 flex flex-col gap-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <x-stat title="Level" value="{{ $monster->level }}" icon="o-bolt" />
-                <x-stat title="Health" value="{{ number_format($monster->health) }}" icon="o-heart" />
+                <x-stat title="Health" value="{{ $monster->health }}" icon="o-heart" />
                 <x-stat title="Difficulty" value="{{ $monster->difficulty ?? '--' }}" icon="o-fire" />
             </div>
 
