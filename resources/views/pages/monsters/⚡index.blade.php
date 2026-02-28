@@ -27,7 +27,6 @@ new class extends Component
         return [
             ['key' => 'name', 'label' => 'Name'],
             ['key' => 'health', 'label' => 'Health'],
-            ['key' => 'difficulty', 'label' => 'Difficulty'],
             ['key' => 'level.value', 'label' => 'Level']
         ];
     }
@@ -72,11 +71,12 @@ new class extends Component
         </x-slot:actions>
     </x-header>
 
-    <x-table 
+    <x-table
         :headers="$headers"
         :rows="$monsters"
         link="/monsters/{id}"
         with-pagination
+        show-empty-text
     />
 
     <x-drawer wire:model="drawer" title="Filters" right separator with-close-button class="lg:w-1/3">
