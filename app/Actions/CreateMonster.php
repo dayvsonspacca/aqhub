@@ -6,21 +6,21 @@ namespace App\Actions;
 
 use App\Actions\Contracts\CreateMonsterContract;
 use App\Models\Monster;
-use AqwSocketClient\Objects\Names\MonsterName;
-use AqwSocketClient\Objects\Levels\MonsterLevel;
-use AqwSocketClient\Objects\Health;
 use AqwSocketClient\Objects\GameFileMetadata;
+use AqwSocketClient\Objects\Health;
+use AqwSocketClient\Objects\Levels\MonsterLevel;
+use AqwSocketClient\Objects\Names\MonsterName;
 
 final class CreateMonster implements CreateMonsterContract
 {
     public function handle(MonsterName $name, MonsterLevel $level, Health $health, GameFileMetadata $metadata): Monster
     {
-        return Monster::create([
+        return Monster::firstOrcreate([
             'name' => $name,
-            'level'  => $level,
+            'level' => $level,
             'health' => $health,
             'asset_name' => $metadata->file,
-            'asset_link' => $metadata->link
+            'asset_link' => $metadata->link,
         ]);
     }
 }

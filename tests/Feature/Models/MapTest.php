@@ -4,6 +4,7 @@ namespace Tests\Feature\Models;
 
 use App\Models\Map;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -47,5 +48,14 @@ final class MapTest extends TestCase
             'name' => 'Battleon',
             'join_name' => 'battleon',
         ]);
+    }
+
+    #[Test]
+    public function it_has_monsters_relationship(): void
+    {
+        $map = Map::factory()->create();
+
+        $this->assertTrue(method_exists($map, 'monsters'));
+        $this->assertInstanceOf(BelongsToMany::class, $map->monsters());
     }
 }

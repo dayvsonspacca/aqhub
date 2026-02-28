@@ -3,7 +3,9 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Monster;
-use App\ValueObjects\Level;
+use AqwSocketClient\Objects\Health;
+use AqwSocketClient\Objects\Levels\MonsterLevel;
+use AqwSocketClient\Objects\Names\MonsterName;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,7 +19,7 @@ final class MonsterTest extends TestCase
     #[Test]
     public function it_has_fillable_attributes(): void
     {
-        $fillable = ['name', 'level', 'health', 'difficulty', 'asset_name', 'asset_link', 'created_at'];
+        $fillable = ['name', 'level', 'health', 'asset_name', 'asset_link', 'created_at'];
 
         $monster = new Monster;
         $this->assertEquals($fillable, $monster->getFillable());
@@ -29,10 +31,9 @@ final class MonsterTest extends TestCase
         $monster = Monster::factory()->create();
 
         $this->assertIsInt($monster->id);
-        $this->assertIsString($monster->name);
-        $this->assertInstanceOf(Level::class, $monster->level);
-        $this->assertIsInt($monster->health);
-        $this->assertIsInt($monster->difficulty);
+        $this->assertInstanceOf(MonsterName::class, $monster->name);
+        $this->assertInstanceOf(MonsterLevel::class, $monster->level);
+        $this->assertInstanceOf(Health::class, $monster->health);
         $this->assertIsString($monster->asset_name);
         $this->assertIsString($monster->asset_link);
         $this->assertInstanceOf(CarbonInterface::class, $monster->registered_at);
@@ -45,9 +46,8 @@ final class MonsterTest extends TestCase
     {
         $userData = [
             'name' => 'Doomlord',
-            'level' => Level::from(1),
+            'level' => new MonsterLevel(1),
             'health' => 100,
-            'difficulty' => 1,
             'asset_name' => 'Draconian5.swf',
             'asset_link' => 'Draconian5',
         ];
@@ -58,7 +58,6 @@ final class MonsterTest extends TestCase
             'name' => 'Doomlord',
             'level' => 1,
             'health' => 100,
-            'difficulty' => 1,
             'asset_name' => 'Draconian5.swf',
             'asset_link' => 'Draconian5',
             'created_at' => null,
@@ -90,5 +89,14 @@ final class MonsterTest extends TestCase
 
         $this->assertTrue(method_exists($monster, 'passives'));
         $this->assertInstanceOf(BelongsToMany::class, $monster->passives());
+    }
+
+    #[Test]
+    public function it_has_maps_relationship(): void
+    {
+        $monster = Monster::factory()->create();
+
+        $this->assertTrue(method_exists($monster, 'maps'));
+        $this->assertInstanceOf(BelongsToMany::class, $monster->maps());
     }
 }

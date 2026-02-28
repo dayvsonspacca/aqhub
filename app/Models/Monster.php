@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Casts\HealthCast;
 use App\Casts\Monster\MonsterLevelCast;
 use App\Casts\Monster\MonsterNameCast;
+use AqwSocketClient\Objects\Health;
+use AqwSocketClient\Objects\Levels\MonsterLevel;
+use AqwSocketClient\Objects\Names\MonsterName;
 use Carbon\CarbonInterface;
 use Database\Factories\MonsterFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,14 +16,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property-read int $id
- * @property-read string $name
- * @property-read Level $level
- * @property-read int $health
- * @property-read ?int $difficulty
+ * @property-read MonsterName $name
+ * @property-read MonsterLevel $level
+ * @property-read Health $health
  * @property-read string $asset_name
  * @property-read string $asset_link
  * @property-read CarbonInterface $registered_at
- * @property ?CarbonInterface $created_at
+ * @property-read ?CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
 class Monster extends Model

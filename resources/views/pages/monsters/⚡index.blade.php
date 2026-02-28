@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Map;
 use App\Models\Monster;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Mary\Traits\Toast;
@@ -13,6 +15,7 @@ new class extends Component
     use WithPagination;
 
     public string $search = '';
+    public int $perPage = 10;
     public bool $drawer = false;
 
     public function clear(): void
@@ -26,8 +29,7 @@ new class extends Component
     {
         return [
             ['key' => 'name.value', 'label' => 'Name'],
-            ['key' => 'health.value', 'label' => 'Health'],
-            ['key' => 'level.value', 'label' => 'Level']
+            ['key' => 'maps', 'label' => 'Locations', 'format' => fn($row, Collection $field) => implode(' ', $field->map(fn(Map $value, $key) => $value->name)->toArray())]
         ];
     }
 
@@ -35,7 +37,9 @@ new class extends Component
     {
         return Monster::query()
             ->when($this->search, fn(Builder $q) => $q->where('name', 'like', "%$this->search%"))
-            ->paginate(15);
+            ->with('maps')
+            ->orderBy('name')
+            ->paginate($this->perPage);
     }
 
     public function updated($property): void
@@ -67,16 +71,19 @@ new class extends Component
             <x-input placeholder="Search..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
         </x-slot:middle>
         <x-slot:actions>
-            <x-button class="btn-secondary" label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" />
+            <x-button class="btn-primary" label="Filters" @click="$wire.drawer = true" responsive icon="o-funnel" />
         </x-slot:actions>
     </x-header>
 
     <x-table
+        class="bg-base-100"
         :headers="$headers"
         :rows="$monsters"
         link="/monsters/{id}"
         with-pagination
         show-empty-text
+        :per-page-values="[10, 25, 50]"
+        per-page="perPage"
     />
 
     <x-drawer wire:model="drawer" title="Filters" right separator with-close-button class="lg:w-1/3">
