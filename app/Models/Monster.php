@@ -72,4 +72,12 @@ class Monster extends Model
             'monster_passive_assignments'
         );
     }
+
+    public function maps(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Map::class,
+            'map_monster_assignments'
+        );
+    }
 }

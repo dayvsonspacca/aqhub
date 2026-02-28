@@ -6,6 +6,7 @@ use Carbon\CarbonInterface;
 use Database\Factories\MapFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property-read int $id
@@ -46,5 +47,13 @@ class Map extends Model
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+    }
+
+    public function monsters(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Monster::class,
+            'map_monster_assignments'
+        );
     }
 }

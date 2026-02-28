@@ -18,6 +18,15 @@ return new class extends Migration
             $table->timestamp('registered_at')->useCurrent();
             $table->timestamps();
         });
+
+        Schema::create('map_monster_assignments', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('map_id')->constrained('maps')->cascadeOnDelete();
+            $table->foreignId('monster_id')->constrained('monsters')->cascadeOnDelete();
+            $table->timestamps();
+
+            $table->unique(['map_id', 'monster_id']);
+        });
     }
 
     /**
