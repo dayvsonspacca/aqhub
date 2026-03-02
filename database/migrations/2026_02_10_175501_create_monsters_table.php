@@ -13,13 +13,11 @@ return new class extends Migration
     {
         Schema::create('monsters', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->tinyInteger('level', unsigned: true);
+            $table->string('name')->index();
+            $table->unsignedSmallInteger('level');
             $table->bigInteger('health', unsigned: true);
-            $table->tinyInteger('difficulty', unsigned: true)->nullable();
             $table->string('asset_name');
             $table->string('asset_link');
-            $table->timestamp('registered_at')->useCurrent();
             $table->timestamps();
         });
     }

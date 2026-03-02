@@ -2,9 +2,13 @@
 
 namespace App\Actions\Contracts;
 
-use App\ValueObjects\Level;
+use App\Models\Monster;
+use AqwSocketClient\Objects\GameFileMetadata;
+use AqwSocketClient\Objects\Health;
+use AqwSocketClient\Objects\Levels\MonsterLevel;
+use AqwSocketClient\Objects\Names\MonsterName;
 
 interface CreateMonsterContract
 {
-    public function __invoke(string $name, Level $level, int $hp, string $assetName, string $assetLink): void;
+    public function handle(MonsterName $name, MonsterLevel $level, Health $health, GameFileMetadata $metadata): Monster;
 }

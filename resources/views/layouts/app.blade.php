@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ isset($title) ? $title.' - '.config('app.name') : config('app.name') }}</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="min-h-screen antialiased bg-base-300">
+<body class="min-h-screen antialiased bg-base-300 font-poppins">
 
     <x-nav sticky class="lg:hidden">
         <x-slot:brand>
@@ -28,7 +30,8 @@
     
                 <x-menu activate-by-route>
                     <x-menu-sub title="World">
-                        <x-menu-item title="Locations" link="#" />
+                        <x-menu-item title="Regions" link="/regions" />
+                        <x-menu-item title="Maps" link="/maps" />
                         <x-menu-item title="Monsters" link="/monsters" />
                         <x-menu-item title="Factions" link="#" />
                         <x-menu-item title="Quests" link="#" />

@@ -10,15 +10,12 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class MonsterPassiveFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = MonsterPassive::class;
+
     public function definition(): array
     {
         return [
-            'description' => fake()->sentence(),
+            'description' => fake()->sentence(5),
         ];
     }
 }

@@ -4,17 +4,21 @@ declare(strict_types=1);
 
 namespace App\AqwSocketClient\Scripts;
 
-use AqwSocketClient\Commands\JoinMapCommand;
-use AqwSocketClient\Commands\LogoutCommand;
+use AqwSocketClient\Commands\JoinAreaCommand;
 use AqwSocketClient\Events\AlreadyInAreaEvent;
+use AqwSocketClient\Events\AreaLockedEvent;
+use AqwSocketClient\Events\AreaMemberOnlyEvent;
+use AqwSocketClient\Events\AreaNotAvaliableEvent;
 use AqwSocketClient\Events\MonstersDetectedEvent;
 use AqwSocketClient\Events\PlayerInventoryLoadedEvent;
 use AqwSocketClient\Interfaces\EventInterface;
+use AqwSocketClient\Objects\Identifiers\RoomIdentifier;
 use AqwSocketClient\Objects\Monster;
-use AqwSocketClient\Scripts\AbstractScript;
-use RuntimeException;
+use AqwSocketClient\Objects\Names\AreaName;
+use AqwSocketClient\Objects\Names\PlayerName;
+use AqwSocketClient\Scripts\ExpirableScript;
 
-class FindMapMonstersScript extends AbstractScript
+class FindMapMonstersScript extends ExpirableScript
 {
     /**
      * @var Monster[]
@@ -22,33 +26,42 @@ class FindMapMonstersScript extends AbstractScript
     private array $monsters = [];
 
     public function __construct(
-        private string $username,
-        private string $mapName
+        private PlayerName $player,
+        private AreaName $area
     ) {}
 
     public function handles(): array
     {
         return [
-            PlayerInventoryLoadedEvent::class, // STARTUP SCRIPT
+            PlayerInventoryLoadedEvent::class, // ENTRY POINT
             MonstersDetectedEvent::class,
+            AreaLockedEvent::class,
+            AreaMemberOnlyEvent::class,
+            AreaNotAvaliableEvent::class,
             AlreadyInAreaEvent::class,
         ];
     }
 
     public function handle(EventInterface $event): array
     {
-        if ($event instanceof AlreadyInAreaEvent) {
-            throw new RuntimeException('The player is already in map: ' . $this->mapName);
+        if ($event instanceof AreaLockedEvent || $event instanceof AreaMemberOnlyEvent || $event instanceof AreaNotAvaliableEvent || $event instanceof AlreadyInAreaEvent) {
+            $this->failed();
+
+            return [];
+        }
+
+        if ($event instanceof PlayerInventoryLoadedEvent) {
+            return [new JoinAreaCommand($this->player, $this->area, new RoomIdentifier(55555))];
         }
 
         if ($event instanceof MonstersDetectedEvent) {
-            $this->done();
+            $this->success();
             $this->monsters = $event->monsters;
 
-            return [new LogoutCommand];
+            return [];
         }
 
-        return [new JoinMapCommand($this->username, $this->mapName, 99999)];
+        return [];
     }
 
     /**
