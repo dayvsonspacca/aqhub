@@ -25,7 +25,7 @@ class MonsterFactory extends Factory
             'Doom Knight',
         ]);
 
-        $variant = fake()->optional(0.6)->numberBetween(1, 5);
+        $variant = fake()->firstName();
 
         $fullName = $variant
             ? "{$baseName} {$variant}"

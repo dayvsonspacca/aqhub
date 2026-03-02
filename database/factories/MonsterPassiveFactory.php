@@ -15,14 +15,7 @@ class MonsterPassiveFactory extends Factory
     public function definition(): array
     {
         return [
-            'description' => fake()->unique()->randomElement([
-                'Reduces incoming damage by 20%',
-                'Heals 5% HP every 3 seconds',
-                'Cant be stunned.',
-                'Reflects 10% of damage taken',
-                'Increases attack speed',
-                'Enrages below 30% health',
-            ]),
+            'description' => fake()->sentence(5),
         ];
     }
 }

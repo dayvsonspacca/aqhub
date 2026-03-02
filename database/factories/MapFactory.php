@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Map;
+use App\Models\Region;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -28,6 +29,10 @@ class MapFactory extends Factory
             'recommended_min_level' => $minLevel,
             'recommended_max_level' => $minLevel
                 ? fake()->numberBetween($minLevel, 100)
+                : null,
+
+            'region_id' => fake()->boolean(70)
+                ? Region::query()->inRandomOrder()->value('id')
                 : null,
         ];
     }

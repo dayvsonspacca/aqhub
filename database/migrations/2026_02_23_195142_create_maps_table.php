@@ -25,6 +25,11 @@ return new class extends Migration
             $table->unsignedInteger('recommended_min_level')->nullable();
             $table->unsignedInteger('recommended_max_level')->nullable();
 
+            $table->foreignId('region_id')
+                ->nullable()
+                ->constrained('regions')
+                ->nullOnDelete();
+
             $table->timestamps();
         });
 

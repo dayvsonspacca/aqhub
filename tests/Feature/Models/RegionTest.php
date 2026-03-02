@@ -4,6 +4,7 @@ namespace Tests\Feature\Models;
 
 use App\Models\Region;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
@@ -54,5 +55,14 @@ final class RegionTest extends TestCase
         ]);
 
         $this->assertNotNull($region->created_at);
+    }
+
+    #[Test]
+    public function it_has_maps_relationship(): void
+    {
+        $region = Region::factory()->create();
+
+        $this->assertTrue(method_exists($region, 'maps'));
+        $this->assertInstanceOf(HasMany::class, $region->maps());
     }
 }

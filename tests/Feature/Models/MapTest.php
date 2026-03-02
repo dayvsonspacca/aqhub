@@ -5,6 +5,7 @@ namespace Tests\Feature\Models;
 use App\Models\Map;
 use AqwSocketClient\Objects\Names\AreaName;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\Attributes\Test;
@@ -25,6 +26,7 @@ final class MapTest extends TestCase
             'upgrade_only',
             'recommended_min_level',
             'recommended_max_level',
+            'region_id',
         ];
 
         $map = new Map;
@@ -74,5 +76,14 @@ final class MapTest extends TestCase
 
         $this->assertTrue(method_exists($map, 'monsters'));
         $this->assertInstanceOf(BelongsToMany::class, $map->monsters());
+    }
+
+    #[Test]
+    public function it_has_region_relationship(): void
+    {
+        $map = Map::factory()->create();
+
+        $this->assertTrue(method_exists($map, 'region'));
+        $this->assertInstanceOf(BelongsTo::class, $map->region());
     }
 }

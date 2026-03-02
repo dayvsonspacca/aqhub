@@ -8,6 +8,7 @@ use Carbon\CarbonInterface;
 use Database\Factories\MapFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
@@ -40,6 +41,7 @@ class Map extends Model
         'upgrade_only',
         'recommended_min_level',
         'recommended_max_level',
+        'region_id',
     ];
 
     /**
@@ -58,9 +60,15 @@ class Map extends Model
             'upgrade_only' => 'boolean',
             'recommended_min_level' => 'int',
             'recommended_max_level' => 'int',
+            'region_id' => 'integer',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
+    }
+
+    public function region(): BelongsTo
+    {
+        return $this->belongsTo(Region::class);
     }
 
     public function monsters(): BelongsToMany
