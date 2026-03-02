@@ -1,34 +1,3 @@
-<?php
-
-use App\Models\Monster;
-use Livewire\Component;
-use Mary\Traits\Toast;
-
-new class extends Component {
-    use Toast;
-
-    public Monster $monster;
-
-    public function mount(Monster $monster): void
-    {
-        $this->monster = $monster->load(['passives', 'maps']);
-    }
-
-    public function with(): array
-    {
-        return [
-            'breadcrumbs' => [['label' => 'Home', 'link' => '/'], ['label' => 'World'], ['label' => 'Monsters', 'link' => '/monsters'], ['label' => $this->monster->name]],
-        ];
-    }
-
-    public function copyJoinName(string $joinName): void
-    {
-        $this->js("navigator.clipboard.writeText('/join $joinName')");
-        $this->success("Copied: /join $joinName", position: 'toast-top');
-    }
-};
-?>
-
 <x:main-container>
     <x-breadcrumbs :items="$breadcrumbs" />
 
@@ -83,11 +52,7 @@ new class extends Component {
                 @foreach ($monster->maps as $map)
                 <x-list-item :item="$map" link="/maps/{{ $map->id }}" class="px-0" no-separator>
                     <x-slot:actions>
-                        <x-button
-                            label="/join {{ $map->join_name }}"
-                            icon="o-clipboard"
-                            class="btn-ghost btn-sm font-mono"
-                            wire:click="copyJoinName('{{ $map->join_name }}')" />
+                        <livewire:copy-button :label="'/join ' . $map->join_name" :value="$map->join_name" :key="'copy-' . $map->id" />
                     </x-slot:actions>
                 </x-list-item>
                 @endforeach

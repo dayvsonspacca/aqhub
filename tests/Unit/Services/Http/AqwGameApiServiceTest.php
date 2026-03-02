@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Services;
+namespace Tests\Unit\Services\Http;
 
 use App\Services\Http\AqwGameApiService;
 use AqwSocketClient\Objects\Names\PlayerName;
