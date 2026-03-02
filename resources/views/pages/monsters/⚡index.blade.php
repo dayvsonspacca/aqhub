@@ -29,7 +29,7 @@ new class extends Component
     {
         return [
             ['key' => 'name.value', 'label' => 'Name'],
-            ['key' => 'maps', 'label' => 'Locations', 'format' => fn($row, Collection $field) => implode(' ', $field->map(fn(Map $value, $key) => $value->name)->toArray())]
+            ['key' => 'maps', 'label' => 'Maps', 'format' => fn($row, Collection $field) => implode(' ', $field->map(fn(Map $value, $key) => $value->name)->toArray())]
         ];
     }
 

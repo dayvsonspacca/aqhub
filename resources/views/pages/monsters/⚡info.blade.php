@@ -67,9 +67,9 @@ new class extends Component {
             </x-list-item>
         </x-card>
 
-        <!-- Locations -->
+        <!-- Maps -->
         @if ($monster->maps->isNotEmpty())
-        <x-card title="Locations" subtitle="Where you can find this monster" shadow separator class="col-span-2" x-data="{ open: true }">
+        <x-card title="Maps" subtitle="Where you can find this monster" shadow separator class="col-span-2" x-data="{ open: true }">
             <x-slot:menu>
                 <x-button :icon="'o-chevron-down'" class="btn-circle btn-sm" x-on:click="open = !open"
                     x-bind:class="open ? 'rotate-180' : ''" />
