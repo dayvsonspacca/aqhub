@@ -1,12 +1,12 @@
 <x:main-container>
     <x-breadcrumbs :items="$breadcrumbs" />
 
-    <x-header title="{{ $map->name }}" separator size="text-3xl" class="my-5" />
+    <x-header :title="$map->name" separator size="text-3xl" class="my-5" />
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {{-- Region --}}
         @if ($map->region)
-            <x-card title="Region" subtitle="{{ $map->region->name }}" shadow class="col-span-2" />
+            <x-card title="Region" :subtitle="$map->region->name" shadow class="col-span-2" />
         @endif
 
         {{-- Details --}}

@@ -25,6 +25,8 @@ class FindMapMonstersScript extends ExpirableScript
      */
     private array $monsters = [];
 
+    public ?EventInterface $failedBy = null;
+
     public function __construct(
         private PlayerName $player,
         private AreaName $area
@@ -46,6 +48,7 @@ class FindMapMonstersScript extends ExpirableScript
     {
         if ($event instanceof AreaLockedEvent || $event instanceof AreaMemberOnlyEvent || $event instanceof AreaNotAvaliableEvent || $event instanceof AlreadyInAreaEvent) {
             $this->failed();
+            $this->failedBy = $event;
 
             return [];
         }

@@ -31,4 +31,21 @@ final class AqwGameApiService
 
         return $token;
     }
+
+    public function travelMap(string $version): array
+    {
+        $response = Http::get(self::URL . '/game/api/data/travelmap', [
+            'v' => $version,
+        ]);
+
+        $json = $response->json();
+
+        throw_unless(
+            filled($json),
+            RuntimeException::class,
+            "Failed to retrieve travel map data for version: {$version}"
+        );
+
+        return $json;
+    }
 }

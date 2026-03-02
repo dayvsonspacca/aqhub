@@ -18,7 +18,12 @@ new class extends Component
     public function with(): array
     {
         return [
-            'breadcrumbs' => [['label' => 'Home', 'link' => '/'], ['label' => 'World'], ['label' => 'Regions', 'link' => '/region'], ['label' => $this->region->name]],
+            'breadcrumbs' => [
+                ['label' => 'Home', 'link' => '/'],
+                ['label' => 'World'],
+                ['label' => 'Regions', 'link' => '/regions'],
+                ['label' => $this->region->name],
+            ],
         ];
     }
 };
