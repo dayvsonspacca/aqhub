@@ -29,7 +29,7 @@ new class extends Component {
 };
 ?>
 
-<livewire:main-container>
+<x:main-container>
     <x-breadcrumbs :items="$breadcrumbs" />
 
     <x-header title="{{ $monster->name }}" separator size="text-3xl" class="my-5" />
@@ -61,9 +61,13 @@ new class extends Component {
                 <x-slot:value>Asset Link</x-slot:value>
                 <x-slot:sub-value>{{ $monster->asset_link }}</x-slot:sub-value>
             </x-list-item>
-            <x-list-item :item="$monster" no-hover>
-                <x-slot:value>Registered At</x-slot:value>
-                <x-slot:sub-value>{{ $monster->registered_at?->format('M d, Y') ?? 'N/A' }}</x-slot:sub-value>
+            <x-list-item :item="$monster" no-separator no-hover>
+                <x-slot:value>Level</x-slot:value>
+                <x-slot:sub-value>{{ $monster->level }}</x-slot:sub-value>
+            </x-list-item>
+            <x-list-item :item="$monster" no-separator no-hover>
+                <x-slot:value>Health</x-slot:value>
+                <x-slot:sub-value>{{ $monster->health }}</x-slot:sub-value>
             </x-list-item>
         </x-card>
 
@@ -102,7 +106,7 @@ new class extends Component {
         </x-card>
         @endif
     </div>
-</livewire:main-container>
+</x:main-container>
 
 @script
 <script>

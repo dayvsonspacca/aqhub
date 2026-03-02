@@ -64,7 +64,7 @@ new class extends Component
 };
 ?>
 
-<livewire:main-container>
+<x:main-container>
     <x-breadcrumbs :items="$breadcrumbs" />
     <x-header title="Monsters" separator size="text-3xl" class="mt-5">
         <x-slot:middle class="justify-end">
@@ -94,4 +94,4 @@ new class extends Component
             <x-button label="Done" icon="o-check" class="btn-secondary" @click="$wire.drawer = false" />
         </x-slot:actions>
     </x-drawer>
-</livewire:main-container>
+</x:main-container>
