@@ -19,7 +19,13 @@ final class MonsterTest extends TestCase
     #[Test]
     public function it_has_fillable_attributes(): void
     {
-        $fillable = ['name', 'level', 'health', 'asset_name', 'asset_link', 'created_at'];
+        $fillable = [
+            'name',
+            'level',
+            'health',
+            'asset_name',
+            'asset_link',
+        ];
 
         $monster = new Monster;
         $this->assertEquals($fillable, $monster->getFillable());
@@ -34,25 +40,26 @@ final class MonsterTest extends TestCase
         $this->assertInstanceOf(MonsterName::class, $monster->name);
         $this->assertInstanceOf(MonsterLevel::class, $monster->level);
         $this->assertInstanceOf(Health::class, $monster->health);
+
         $this->assertIsString($monster->asset_name);
         $this->assertIsString($monster->asset_link);
-        $this->assertInstanceOf(CarbonInterface::class, $monster->registered_at);
+
+        $this->assertInstanceOf(CarbonInterface::class, $monster->created_at);
         $this->assertInstanceOf(CarbonInterface::class, $monster->updated_at);
-        $this->assertNull($monster->created_at);
     }
 
     #[Test]
     public function it_can_be_created_with_valid_data(): void
     {
-        $userData = [
-            'name' => 'Doomlord',
+        $data = [
+            'name' => new MonsterName('Doomlord'),
             'level' => new MonsterLevel(1),
-            'health' => 100,
+            'health' => new Health(100),
             'asset_name' => 'Draconian5.swf',
             'asset_link' => 'Draconian5',
         ];
 
-        Monster::create($userData);
+        $monster = Monster::create($data);
 
         $this->assertDatabaseHas('monsters', [
             'name' => 'Doomlord',
@@ -60,24 +67,7 @@ final class MonsterTest extends TestCase
             'health' => 100,
             'asset_name' => 'Draconian5.swf',
             'asset_link' => 'Draconian5',
-            'created_at' => null,
         ]);
-    }
-
-    #[Test]
-    public function it_has_correct_timestamps(): void
-    {
-        $monster = Monster::factory()->create();
-
-        $this->assertNotNull($monster->registered_at);
-        $this->assertNull($monster->created_at);
-        $this->assertNotNull($monster->updated_at);
-    }
-
-    #[Test]
-    public function it_can_have_created_at_timestamp(): void
-    {
-        $monster = Monster::factory()->created()->create();
 
         $this->assertNotNull($monster->created_at);
     }

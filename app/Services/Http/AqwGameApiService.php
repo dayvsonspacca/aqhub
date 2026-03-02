@@ -11,7 +11,7 @@ use SensitiveParameter;
 
 final class AqwGameApiService
 {
-    public const string URL = "https://game.aq.com";
+    public const string URL = 'https://game.aq.com';
 
     public function token(PlayerName $player, #[SensitiveParameter] string $password): string
     {

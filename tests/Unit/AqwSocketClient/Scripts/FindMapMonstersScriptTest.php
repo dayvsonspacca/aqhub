@@ -35,6 +35,7 @@ final class FindMapMonstersScriptTest extends TestCase
     private FakeSocket $socket;
 
     private PlayerName $player;
+
     private AreaName $area;
 
     protected function setUp(): void

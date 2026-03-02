@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Database\Factories\RegionFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,6 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property-read int $id
  * @property-read int $aqw_id
  * @property-read string $name
+ * @property-read CarbonInterface $created_at
+ * @property-read CarbonInterface $updated_at
  */
 class Region extends Model
 {
@@ -24,7 +27,6 @@ class Region extends Model
     protected $fillable = [
         'name',
         'aqw_id',
-        'created_at',
     ];
 
     /**
@@ -36,9 +38,8 @@ class Region extends Model
     {
         return [
             'id' => 'integer',
-            'aqw_id' => 'id',
+            'aqw_id' => 'integer',
             'name' => 'string',
-            'registered_at' => 'datetime',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];

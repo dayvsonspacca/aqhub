@@ -38,7 +38,7 @@ class FindMapMonstersScript extends ExpirableScript
             AreaLockedEvent::class,
             AreaMemberOnlyEvent::class,
             AreaNotAvaliableEvent::class,
-            AlreadyInAreaEvent::class
+            AlreadyInAreaEvent::class,
         ];
     }
 
@@ -46,6 +46,7 @@ class FindMapMonstersScript extends ExpirableScript
     {
         if ($event instanceof AreaLockedEvent || $event instanceof AreaMemberOnlyEvent || $event instanceof AreaNotAvaliableEvent || $event instanceof AlreadyInAreaEvent) {
             $this->failed();
+
             return [];
         }
 
@@ -56,6 +57,7 @@ class FindMapMonstersScript extends ExpirableScript
         if ($event instanceof MonstersDetectedEvent) {
             $this->success();
             $this->monsters = $event->monsters;
+
             return [];
         }
 

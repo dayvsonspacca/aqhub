@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\Services;
 
 use App\Services\Http\AqwGameApiService;
-use App\Services\HttpAqwAuthService;
 use AqwSocketClient\Objects\Names\PlayerName;
 use Illuminate\Support\Facades\Http;
 use PHPUnit\Framework\Attributes\Test;

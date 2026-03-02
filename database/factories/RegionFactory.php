@@ -2,26 +2,24 @@
 
 namespace Database\Factories;
 
+use App\Models\Region;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Region>
+ * @extends Factory<Region>
  */
 class RegionFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Region::class;
+
     public function definition(): array
     {
         return [
-            'name' => fake()->country(),
-            'aqw_id' => fake()->unique()->numberBetween(1, 1000),
-            'created_at' => null,
-            'registered_at' => fake()->dateTimeBetween('-1 year', 'now'),
-            'updated_at' => fake()->dateTimeBetween('-1 year', 'now'),
+            'name' => Str::title(fake()->unique()->word()),
+            'aqw_id' => fake()->unique()->numberBetween(1, 5000),
+            'created_at' => fake()->dateTimeBetween('-2 years', '-1 month'),
+            'updated_at' => fake()->dateTimeBetween('-1 month', 'now'),
         ];
     }
 }

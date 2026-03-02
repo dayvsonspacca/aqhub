@@ -10,15 +10,19 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class MonsterPassiveFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = MonsterPassive::class;
+
     public function definition(): array
     {
         return [
-            'description' => fake()->sentence(),
+            'description' => fake()->unique()->randomElement([
+                'Reduces incoming damage by 20%',
+                'Heals 5% HP every 3 seconds',
+                'Cant be stunned.',
+                'Reflects 10% of damage taken',
+                'Increases attack speed',
+                'Enrages below 30% health',
+            ]),
         ];
     }
 }

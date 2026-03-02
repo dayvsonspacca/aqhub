@@ -21,16 +21,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read Health $health
  * @property-read string $asset_name
  * @property-read string $asset_link
- * @property-read CarbonInterface $registered_at
- * @property-read ?CarbonInterface $created_at
+ * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
 class Monster extends Model
 {
     /** @use HasFactory<MonsterFactory> */
     use HasFactory;
-
-    const CREATED_AT = null;
 
     /**
      * The attributes that are mass assignable.
@@ -43,7 +40,6 @@ class Monster extends Model
         'health',
         'asset_name',
         'asset_link',
-        'created_at',
     ];
 
     /**
@@ -60,7 +56,6 @@ class Monster extends Model
             'health' => HealthCast::class,
             'asset_name' => 'string',
             'asset_link' => 'string',
-            'registered_at' => 'datetime',
             'updated_at' => 'datetime',
             'created_at' => 'datetime',
         ];

@@ -32,7 +32,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('monster_passives');
         Schema::dropIfExists('monster_passive_assignments');
+        Schema::dropIfExists('monster_passives');
     }
 };

@@ -11,37 +11,58 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class MonsterFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = Monster::class;
+
     public function definition(): array
     {
-        return [
-            'name' => fake()->name(),
-            'level' => fake()->numberBetween(1, 100),
-            'health' => fake()->numberBetween(50, 5000),
-            'asset_name' => 'Draconian' . fake()->numberBetween(1, 5) . '.swf',
-            'asset_link' => 'Draconian' . fake()->numberBetween(1, 5),
-            'created_at' => null,
-            'registered_at' => fake()->dateTimeBetween('-1 year', 'now'),
-            'updated_at' => fake()->dateTimeBetween('-1 year', 'now'),
-        ];
-    }
-
-    public function created(): static
-    {
-        return $this->state(fn (array $attributes) => [
-            'created_at' => fake()->dateTimeBetween('-1 year', 'now'),
+        $baseName = fake()->randomElement([
+            'Draconian',
+            'Skeleton',
+            'Chaos Beast',
+            'Shadow Fiend',
+            'Void Reaper',
+            'Fire Elemental',
+            'Doom Knight',
         ]);
+
+        $variant = fake()->optional(0.6)->numberBetween(1, 5);
+
+        $fullName = $variant
+            ? "{$baseName} {$variant}"
+            : $baseName;
+
+        $assetIndex = fake()->numberBetween(1, 5);
+
+        return [
+            'name' => $fullName,
+            'level' => fake()->numberBetween(1, 100),
+            'health' => fake()->numberBetween(100, 15000),
+
+            'asset_name' => "Draconian{$assetIndex}.swf",
+            'asset_link' => "Draconian{$assetIndex}",
+
+            'created_at' => fake()->dateTimeBetween('-1 year', '-1 month'),
+            'updated_at' => fake()->dateTimeBetween('-1 month', 'now'),
+        ];
     }
 
     public function configure(): static
     {
         return $this->afterCreating(function (Monster $monster) {
-            $passives = MonsterPassive::factory(fake()->numberBetween(0, 4))->create();
-            $monster->passives()->attach($passives);
+
+            $passives = MonsterPassive::factory()
+                ->count(fake()->numberBetween(0, 3))
+                ->create();
+
+            $monster->passives()->attach($passives->pluck('id'));
         });
+    }
+
+    public function boss(): static
+    {
+        return $this->state(fn () => [
+            'level' => fake()->numberBetween(80, 120),
+            'health' => fake()->numberBetween(20000, 150000),
+        ]);
     }
 }
