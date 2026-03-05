@@ -22,7 +22,7 @@ new class extends Component {
 ?>
 
 <div wire:ignore>
-    <div id="{{ $playerId }}"></div>
+    <div id="{{ $playerId }}" class="w-full aspect-4/3"></div>
 </div>
 
 @script
@@ -47,6 +47,8 @@ new class extends Component {
         load(extraParameters = {}) {
             if (!this._player) {
                 this._player = window.RufflePlayer.newest().createPlayer();
+                this._player.style.width = "100%";
+                this._player.style.height = "100%";
                 __ruffleContainer.innerHTML = "";
                 __ruffleContainer.append(this._player);
             }

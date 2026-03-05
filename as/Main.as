@@ -4,6 +4,7 @@ package
    import flash.display.Shape;
    import flash.display.StageAlign;
    import flash.display.StageScaleMode;
+   import flash.events.Event;
    import flash.external.ExternalInterface;
 
    public class Main extends MovieClip
@@ -16,10 +17,20 @@ package
          stage.scaleMode = StageScaleMode.NO_SCALE;
 
          var bg:Shape = new Shape();
-         bg.graphics.beginFill(0x1f202a);
-         bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
-         bg.graphics.endFill();
+
+         function drawBackground():void {
+            bg.graphics.clear();
+            bg.graphics.beginFill(0x1f202a);
+            bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
+            bg.graphics.endFill();
+         }
+
+         drawBackground();
          addChild(bg);
+
+         stage.addEventListener(Event.RESIZE, function(e:Event):void {
+            drawBackground();
+         }, false, 0, true);
 
          var params:Object = stage.loaderInfo.parameters;
 

@@ -14,9 +14,7 @@ package
    public class MonsterPreview extends MovieClip
    {
       private static const SERVER_PATH:String = "http://127.0.0.1:8000/proxy/swf/monster/";
-      private static const STAGE_W:Number     = 500;
-      private static const STAGE_H:Number     = 375;
-      private static const FIT_SIZE:Number    = 300;
+      private static const FIT_RATIO:Number    = 0.8;
 
       internal var pLoaderD:ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
       internal var pLoaderC:LoaderContext      = new LoaderContext(false, pLoaderD);
@@ -149,6 +147,8 @@ package
          mcStage.addChild(mc);
          fitAndCenter(mc);
 
+         stage.addEventListener(Event.RESIZE, onStageResize, false, 0, true);
+
          notifyLabelsToJS(getLabels());
 
          if (sAnim != "")
@@ -162,20 +162,35 @@ package
 
       private function fitAndCenter(mc:MovieClip) : void
       {
+         var sw:Number = stage.stageWidth;
+         var sh:Number = stage.stageHeight;
+
          var bounds:Rectangle = mc.getBounds(mc);
 
          trace("[MonsterPreview] Bounds -> x=" + bounds.x + " y=" + bounds.y + " w=" + bounds.width + " h=" + bounds.height);
 
-         var scale:Number = FIT_SIZE / Math.max(bounds.width, bounds.height);
+         var fitSize:Number   = Math.min(sw, sh) * FIT_RATIO;
+         var scale:Number     = fitSize / Math.max(bounds.width, bounds.height);
          mc.scaleX = mc.scaleY = scale;
 
          trace("[MonsterPreview] Scale applied: " + scale);
 
+         mc.x = 0;
+         mc.y = 0;
+
          var boundsAfter:Rectangle = mc.getBounds(this);
-         mc.x += (STAGE_W / 2) - (boundsAfter.x + boundsAfter.width  / 2);
-         mc.y += (STAGE_H / 2) - (boundsAfter.y + boundsAfter.height / 2);
+         mc.x += (sw / 2) - (boundsAfter.x + boundsAfter.width  / 2);
+         mc.y += (sh / 2) - (boundsAfter.y + boundsAfter.height / 2);
 
          trace("[MonsterPreview] Position -> x=" + mc.x + " y=" + mc.y);
+      }
+
+      private function onStageResize(e:Event) : void
+      {
+         if (monsterMC != null)
+         {
+            fitAndCenter(monsterMC);
+         }
       }
 
       private function logLabels(mc:MovieClip) : void

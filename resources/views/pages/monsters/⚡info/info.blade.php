@@ -11,7 +11,7 @@
         </div>
 
         <!-- Player -->
-        <x-card title="Animations" subtitle="Click to play" shadow separator class="col-span-1" body-class="overflow-hidden">
+        <x-card title="Animations" subtitle="Click to play" shadow separator class="col-span-2 md:col-span-1" body-class="overflow-hidden">
             <livewire:ruffle-player
                 swf="/swfs/monster.swf"
                 :parameters="['sFile' => $monster->asset_name, 'sSymbol' => $monster->asset_link, 'sAnim' => 'Idle']"
@@ -24,7 +24,7 @@
         </x-card>
 
         <!-- Details -->
-        <x-card title="Details" shadow separator class="col-span-1" subtitle="Additional information">
+        <x-card title="Details" shadow separator class="col-span-2 md:col-span-1" subtitle="Additional information">
             <x-list-item :item="$monster" no-separator no-hover>
                 <x-slot:value>Asset Name</x-slot:value>
                 <x-slot:sub-value>{{ $monster->asset_name }}</x-slot:sub-value>
@@ -65,7 +65,7 @@
 
         <!-- Passives -->
         @if ($monster->passives->isNotEmpty())
-        <x-card title="Passives" shadow separator>
+        <x-card title="Passives" shadow separator class="col-span-2">
             <div class="flex flex-wrap gap-2">
                 @foreach ($monster->passives as $passive)
                 <x-badge :value="$passive->description" class="badge-primary" />
