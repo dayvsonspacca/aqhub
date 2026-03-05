@@ -4,6 +4,7 @@ package
    import flash.display.Shape;
    import flash.display.StageAlign;
    import flash.display.StageScaleMode;
+   import flash.external.ExternalInterface;
 
    public class Main extends MovieClip
    {
@@ -32,6 +33,14 @@ package
 
          var preview:MonsterPreview = new MonsterPreview();
          addChild(preview);
+
+         if (ExternalInterface.available)
+         {
+            ExternalInterface.addCallback("playAnim", function(anim:String):void {
+               preview.playAnim(anim);
+            });
+            trace("[Main] ExternalInterface: playAnim registered");
+         }
 
          preview.loadMonster(sFile, sSymbol, sAnim);
       }

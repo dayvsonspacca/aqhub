@@ -12,11 +12,14 @@
 
         <!-- Player -->
         <x-card title="Animations" subtitle="Click to play" shadow separator class="col-span-1" body-class="overflow-hidden">
-            <div wire:ignore>
-                <div id="monster-swf"></div>
-                <div id="monster-anims" class="flex flex-wrap gap-2">
-                    <x-progress class="progress-primary h-0.5" indeterminate />
-                </div>
+            <livewire:ruffle-player
+                swf="/swfs/monster.swf"
+                :parameters="['sFile' => $monster->asset_name, 'sSymbol' => $monster->asset_link, 'sAnim' => 'Idle']"
+                player-id="monster-player"
+                autoload
+            />
+            <div id="monster-anims" class="flex flex-wrap gap-2 mt-2">
+                <x-progress class="progress-primary h-0.5" indeterminate />
             </div>
         </x-card>
 
@@ -86,47 +89,9 @@
             const btn = document.createElement("button");
             btn.className = "btn btn-xs btn-outline btn-primary uppercase font-bold";
             btn.textContent = anim;
-            btn.onclick = () => {
-                const playerElement = document.querySelector("ruffle-player");
-                playerElement.load({
-                    url: "/swfs/monster.swf",
-                    parameters: {
-                        sFile: "{{ $monster->asset_name }}",
-                        sSymbol: "{{ $monster->asset_link }}",
-                        sAnim: anim
-                    }
-                });
-            };
+            btn.onclick = () => window['monster-player'].playAnim(anim);
             container.append(btn);
         });
     };
-
-    window.RufflePlayer = window.RufflePlayer || {};
-    window.RufflePlayer.config = {
-        publicPath: "/build/ruffle/",
-        backgroundColor: "#1f202a",
-        quality: "high",
-        autoplay: "on",
-        unmuteOverlay: "hidden",
-        splashScreen: false,
-        showSwfDownload: true,
-        allowScriptAccess: true
-    };
-
-    const ruffle = window.RufflePlayer.newest();
-    const player = ruffle.createPlayer();
-    const container = document.getElementById("monster-swf");
-
-    container.innerHTML = "";
-    container.append(player);
-
-    player.load({
-        url: "/swfs/monster.swf",
-        parameters: {
-            sFile: "{{ $monster->asset_name }}",
-            sSymbol: "{{ $monster->asset_link }}",
-            sAnim: "Idle"
-        }
-    });
 </script>
 @endscript
