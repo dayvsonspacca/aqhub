@@ -27,6 +27,16 @@ final class FindMapMonstersJobTest extends TestCase
 {
     use RefreshDatabase;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        config([
+            'services.aqw.username' => 'TestPlayer',
+            'services.aqw.password' => md5('test'),
+        ]);
+    }
+
     private function fakeSocket(): FakeSocket
     {
         return new FakeSocket;
@@ -48,7 +58,7 @@ final class FindMapMonstersJobTest extends TestCase
 
     private function queueLoginResponses(FakeSocket $socket): void
     {
-        $player = new PlayerName(config('services.aqw.username') ?? 'TestPlayer');
+        $player = new PlayerName(config('services.aqw.username'));
 
         $socket
             ->queueResponse(MessageGenerator::domainPolicy())
