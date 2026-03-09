@@ -10,7 +10,6 @@ use AqwSocketClient\Clients\SocketClient;
 use AqwSocketClient\Enums\ScriptResult;
 use AqwSocketClient\Objects\Names\PlayerName;
 use AqwSocketClient\Scripts\LoginScript;
-use AqwSocketClient\Server;
 use DateTimeImmutable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -32,9 +31,8 @@ class FindMapMonstersJob implements ShouldQueue
         public readonly Map $map
     ) {}
 
-    public function handle(AqwGameApiService $api, CreateMonsterContract $createMonster): void
+    public function handle(AqwGameApiService $api, CreateMonsterContract $createMonster, SocketClient $client): void
     {
-        $client = new SocketClient(Server::espada());
 
         $player = new PlayerName(config('services.aqw.username'));
         $password = config('services.aqw.password');
