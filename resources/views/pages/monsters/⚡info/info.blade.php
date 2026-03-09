@@ -1,7 +1,7 @@
 <x:main-container>
     <x-breadcrumbs :items="$breadcrumbs" />
 
-    <x-header title="{{ $monster->name }}" separator size="text-3xl" class="my-5" />
+    <x-header :title="$monster->name" separator size="text-3xl" class="my-5" />
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <!-- Stats -->
@@ -11,17 +11,20 @@
         </div>
 
         <!-- Player -->
-        <x-card title="Animations" subtitle="Click to play" shadow separator class="col-span-1" body-class="overflow-hidden">
-            <div wire:ignore>
-                <div id="monster-swf"></div>
-                <div id="monster-anims" class="flex flex-wrap gap-2">
-                    <x-progress class="progress-primary h-0.5" indeterminate />
-                </div>
+        <x-card title="Animations" subtitle="Click to play" shadow separator class="col-span-2 md:col-span-1" body-class="overflow-hidden">
+            <livewire:ruffle-player
+                swf="/swfs/monster.swf"
+                :parameters="['sFile' => $monster->asset_name, 'sSymbol' => $monster->asset_link, 'sAnim' => 'Idle']"
+                player-id="monster-player"
+                autoload
+            />
+            <div id="monster-anims" class="flex flex-wrap gap-2 mt-2">
+                <x-progress class="progress-primary h-0.5" indeterminate />
             </div>
         </x-card>
 
         <!-- Details -->
-        <x-card title="Details" shadow separator class="col-span-1" subtitle="Additional information">
+        <x-card title="Details" shadow separator class="col-span-2 md:col-span-1" subtitle="Additional information">
             <x-list-item :item="$monster" no-separator no-hover>
                 <x-slot:value>Asset Name</x-slot:value>
                 <x-slot:sub-value>{{ $monster->asset_name }}</x-slot:sub-value>
@@ -62,7 +65,7 @@
 
         <!-- Passives -->
         @if ($monster->passives->isNotEmpty())
-        <x-card title="Passives" shadow separator>
+        <x-card title="Passives" shadow separator class="col-span-2">
             <div class="flex flex-wrap gap-2">
                 @foreach ($monster->passives as $passive)
                 <x-badge :value="$passive->description" class="badge-primary" />
@@ -75,8 +78,8 @@
 
 @script
 <script>
-    window.onMonsterLabelsLoaded = function(labelsCSV) {
-        const anims = labelsCSV.split(",").filter(Boolean);
+    window.onMonsterAnimationsLoaded = function(animationsCSV) {
+        const anims = animationsCSV.split(",").filter(Boolean);
         const container = document.getElementById("monster-anims");
         if (!container) return;
 
@@ -86,47 +89,9 @@
             const btn = document.createElement("button");
             btn.className = "btn btn-xs btn-outline btn-primary uppercase font-bold";
             btn.textContent = anim;
-            btn.onclick = () => {
-                const playerElement = document.querySelector("ruffle-player");
-                playerElement.load({
-                    url: "/swfs/monster.swf",
-                    parameters: {
-                        sFile: "{{ $monster->asset_name }}",
-                        sSymbol: "{{ $monster->asset_link }}",
-                        sAnim: anim
-                    }
-                });
-            };
+            btn.onclick = () => window['monster-player'].playAnim(anim);
             container.append(btn);
         });
     };
-
-    window.RufflePlayer = window.RufflePlayer || {};
-    window.RufflePlayer.config = {
-        publicPath: "/build/ruffle/",
-        backgroundColor: "#1f202a",
-        quality: "high",
-        autoplay: "on",
-        unmuteOverlay: "hidden",
-        splashScreen: false,
-        showSwfDownload: true,
-        allowScriptAccess: true
-    };
-
-    const ruffle = window.RufflePlayer.newest();
-    const player = ruffle.createPlayer();
-    const container = document.getElementById("monster-swf");
-
-    container.innerHTML = "";
-    container.append(player);
-
-    player.load({
-        url: "/swfs/monster.swf",
-        parameters: {
-            sFile: "{{ $monster->asset_name }}",
-            sSymbol: "{{ $monster->asset_link }}",
-            sAnim: "Idle"
-        }
-    });
 </script>
 @endscript

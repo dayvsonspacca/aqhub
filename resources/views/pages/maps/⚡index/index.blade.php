@@ -16,7 +16,7 @@
         @endscope
         @scope('cell_region.name', $map)
             @if ($map->region)
-                <x-button :label="$map->region->name" link="/region/{{ $map->region_id }}" class="btn-link btn-sm" />
+                <x-button :label="$map->region->name" link="/regions/{{ $map->region_id }}" class="btn-link btn-sm" />
             @endif
         @endscope
     </x-table>

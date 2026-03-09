@@ -16,7 +16,7 @@ return new class extends Migration
 
             $table->unsignedInteger('aqw_id')->unique();
             $table->string('name')->index();
-            $table->string('join_name')->unique();
+            $table->string('join_name');
 
             $table->text('description')->nullable();
 

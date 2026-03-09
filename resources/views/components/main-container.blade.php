@@ -1,3 +1,3 @@
-<div class="p-5">
+<div class="p-2 md:p-4">
     {{ $slot }}
 </div>

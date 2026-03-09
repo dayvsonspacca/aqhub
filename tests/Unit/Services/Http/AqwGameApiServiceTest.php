@@ -50,4 +50,33 @@ final class AqwGameApiServiceTest extends TestCase
         $password = md5('test');
         $this->service->token(new PlayerName('Hilise'), $password);
     }
+
+    #[Test]
+    public function it_can_return_travel_map(): void
+    {
+        $data = [
+            ['strMapName' => 'battleon', 'strMapFileName' => 'battleon.swf'],
+            ['strMapName' => 'yulgar', 'strMapFileName' => 'yulgar.swf'],
+        ];
+
+        Http::fake([
+            AqwGameApiService::URL . '/game/api/data/travelmap*' => Http::response($data),
+        ]);
+
+        $result = $this->service->travelMap('R0039');
+        $this->assertSame($data, $result);
+    }
+
+    #[Test]
+    public function it_throws_if_travel_map_is_empty(): void
+    {
+        Http::fake([
+            AqwGameApiService::URL . '/game/api/data/travelmap*' => Http::response(null),
+        ]);
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Failed to retrieve travel map data for version: R0039');
+
+        $this->service->travelMap('R0039');
+    }
 }

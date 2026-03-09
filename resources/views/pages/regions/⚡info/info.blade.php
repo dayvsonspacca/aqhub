@@ -1,7 +1,7 @@
 <x:main-container>
     <x-breadcrumbs :items="$breadcrumbs" />
 
-    <x-header title="{{ $region->name }}" separator size="text-3xl" class="my-5" />
+    <x-header :title="$region->name" separator size="text-3xl" class="my-5" />
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <!-- Maps -->

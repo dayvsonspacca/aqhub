@@ -6,17 +6,15 @@ package
    import flash.events.IOErrorEvent;
    import flash.events.SecurityErrorEvent;
    import flash.geom.Rectangle;
+   import flash.external.ExternalInterface;
    import flash.net.URLRequest;
-   import flash.net.navigateToURL;
    import flash.system.ApplicationDomain;
    import flash.system.LoaderContext;
 
    public class MonsterPreview extends MovieClip
    {
       private static const SERVER_PATH:String = "http://127.0.0.1:8000/proxy/swf/monster/";
-      private static const STAGE_W:Number     = 500;
-      private static const STAGE_H:Number     = 375;
-      private static const FIT_SIZE:Number    = 300;
+      private static const FIT_RATIO:Number    = 0.8;
 
       internal var pLoaderD:ApplicationDomain = new ApplicationDomain(ApplicationDomain.currentDomain);
       internal var pLoaderC:LoaderContext      = new LoaderContext(false, pLoaderD);
@@ -34,16 +32,16 @@ package
          trace("[MonsterPreview] Constructor complete");
       }
 
-      public function getLabels() : String
+      public function getAnimations() : String
       {
          if (monsterMC == null) return "";
-         var labelNames:Array = [];
-         var labels:Array = monsterMC.currentLabels;
-         for (var i:int = 0; i < labels.length; i++)
+         var animationNames:Array = [];
+         var frames:Array = monsterMC.currentLabels;
+         for (var i:int = 0; i < frames.length; i++)
          {
-            labelNames.push(labels[i].name);
+            animationNames.push(frames[i].name);
          }
-         return labelNames.join(",");
+         return animationNames.join(",");
       }
 
       public function loadMonster(sFile:String, sSymbol:String, initialAnim:String = "") : void
@@ -72,7 +70,7 @@ package
             trace("[MonsterPreview] playAnim: monsterMC not loaded yet");
             return;
          }
-         if (hasLabel(anim))
+         if (hasAnimation(anim))
          {
             trace("[MonsterPreview] Playing anim: " + anim);
             monsterMC.gotoAndPlay(anim);
@@ -83,28 +81,22 @@ package
          }
       }
 
-      private function hasLabel(anim:String) : Boolean
+      private function hasAnimation(anim:String) : Boolean
       {
-         var labels:Array = monsterMC.currentLabels;
-         for (var i:int = 0; i < labels.length; i++)
+         var frames:Array = monsterMC.currentLabels;
+         for (var i:int = 0; i < frames.length; i++)
          {
-            if (labels[i].name == anim) return true;
+            if (frames[i].name == anim) return true;
          }
          return false;
       }
 
-      private function notifyLabelsToJS(labelsCSV:String) : void
+      private function notifyAnimations(animationsCSV:String) : void
       {
-         var js:String = "javascript:window.onMonsterLabelsLoaded && window.onMonsterLabelsLoaded('" + labelsCSV + "')";
-         try
-         {
-            navigateToURL(new URLRequest(js), "_self");
-            trace("[MonsterPreview] Labels sent to JS: " + labelsCSV);
-         }
-         catch (err:Error)
-         {
-            trace("[MonsterPreview] navigateToURL failed: " + err.message);
-         }
+         if (!ExternalInterface.available) { return; }
+
+         ExternalInterface.call("onMonsterAnimationsLoaded", animationsCSV);
+         trace("[MonsterPreview] Animations sent: " + animationsCSV);
       }
 
       private function onOpen(e:Event) : void
@@ -144,12 +136,14 @@ package
          }
 
          monsterMC = mc;
-         logLabels(mc);
+         logAnimations(mc);
 
          mcStage.addChild(mc);
          fitAndCenter(mc);
 
-         notifyLabelsToJS(getLabels());
+         stage.addEventListener(Event.RESIZE, onStageResize, false, 0, true);
+
+         notifyAnimations(getAnimations());
 
          if (sAnim != "")
          {
@@ -162,29 +156,44 @@ package
 
       private function fitAndCenter(mc:MovieClip) : void
       {
+         var sw:Number = stage.stageWidth;
+         var sh:Number = stage.stageHeight;
+
          var bounds:Rectangle = mc.getBounds(mc);
 
          trace("[MonsterPreview] Bounds -> x=" + bounds.x + " y=" + bounds.y + " w=" + bounds.width + " h=" + bounds.height);
 
-         var scale:Number = FIT_SIZE / Math.max(bounds.width, bounds.height);
+         var fitSize:Number   = Math.min(sw, sh) * FIT_RATIO;
+         var scale:Number     = fitSize / Math.max(bounds.width, bounds.height);
          mc.scaleX = mc.scaleY = scale;
 
          trace("[MonsterPreview] Scale applied: " + scale);
 
+         mc.x = 0;
+         mc.y = 0;
+
          var boundsAfter:Rectangle = mc.getBounds(this);
-         mc.x += (STAGE_W / 2) - (boundsAfter.x + boundsAfter.width  / 2);
-         mc.y += (STAGE_H / 2) - (boundsAfter.y + boundsAfter.height / 2);
+         mc.x += (sw / 2) - (boundsAfter.x + boundsAfter.width  / 2);
+         mc.y += (sh / 2) - (boundsAfter.y + boundsAfter.height / 2);
 
          trace("[MonsterPreview] Position -> x=" + mc.x + " y=" + mc.y);
       }
 
-      private function logLabels(mc:MovieClip) : void
+      private function onStageResize(e:Event) : void
       {
-         var labels:Array = mc.currentLabels;
-         trace("[MonsterPreview] Found " + labels.length + " animation labels:");
-         for (var i:int = 0; i < labels.length; i++)
+         if (monsterMC != null)
          {
-            trace("[MonsterPreview]   [" + i + "] " + labels[i].name + " (frame " + labels[i].frame + ")");
+            fitAndCenter(monsterMC);
+         }
+      }
+
+      private function logAnimations(mc:MovieClip) : void
+      {
+         var frames:Array = mc.currentLabels;
+         trace("[MonsterPreview] Found " + frames.length + " animations:");
+         for (var i:int = 0; i < frames.length; i++)
+         {
+            trace("[MonsterPreview]   [" + i + "] " + frames[i].name + " (frame " + frames[i].frame + ")");
          }
       }
 
