@@ -9,6 +9,11 @@ package
 
    public class Main extends MovieClip
    {
+      private static const BG_COLOR:uint = 0x1f202a;
+
+      private var bg:Shape;
+      private var preview:MonsterPreview;
+
       public function Main()
       {
          super();
@@ -16,24 +21,13 @@ package
          stage.align     = StageAlign.TOP_LEFT;
          stage.scaleMode = StageScaleMode.NO_SCALE;
 
-         var bg:Shape = new Shape();
-
-         function drawBackground():void {
-            bg.graphics.clear();
-            bg.graphics.beginFill(0x1f202a);
-            bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
-            bg.graphics.endFill();
-         }
-
+         bg = new Shape();
          drawBackground();
          addChild(bg);
 
-         stage.addEventListener(Event.RESIZE, function(e:Event):void {
-            drawBackground();
-         }, false, 0, true);
+         stage.addEventListener(Event.RESIZE, onStageResize, false, 0, true);
 
-         var params:Object = stage.loaderInfo.parameters;
-
+         var params:Object  = stage.loaderInfo.parameters;
          var sFile:String   = params.sFile   || "monster-VoidKnight.swf";
          var sSymbol:String = params.sSymbol || "VoidKnight";
          var sAnim:String   = params.sAnim   || "Idle";
@@ -42,18 +36,38 @@ package
          trace("[Main] sSymbol=" + sSymbol);
          trace("[Main] sAnim="   + sAnim);
 
-         var preview:MonsterPreview = new MonsterPreview();
+         preview = new MonsterPreview();
          addChild(preview);
 
-         if (ExternalInterface.available)
-         {
-            ExternalInterface.addCallback("playAnim", function(anim:String):void {
-               preview.playAnim(anim);
-            });
-            trace("[Main] ExternalInterface: playAnim registered");
-         }
+         registerExternalInterface();
 
          preview.loadMonster(sFile, sSymbol, sAnim);
+      }
+
+      private function drawBackground() : void
+      {
+         bg.graphics.clear();
+         bg.graphics.beginFill(BG_COLOR);
+         bg.graphics.drawRect(0, 0, stage.stageWidth, stage.stageHeight);
+         bg.graphics.endFill();
+      }
+
+      private function onStageResize(e:Event) : void
+      {
+         drawBackground();
+      }
+
+      private function registerExternalInterface() : void
+      {
+         if (!ExternalInterface.available) { return; }
+
+         ExternalInterface.addCallback("playAnim", onPlayAnimCallback);
+         trace("[Main] ExternalInterface: playAnim registered");
+      }
+
+      private function onPlayAnimCallback(anim:String) : void
+      {
+         preview.playAnim(anim);
       }
    }
 }

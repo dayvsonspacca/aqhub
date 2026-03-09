@@ -78,8 +78,8 @@
 
 @script
 <script>
-    window.onMonsterLabelsLoaded = function(labelsCSV) {
-        const anims = labelsCSV.split(",").filter(Boolean);
+    window.onMonsterAnimationsLoaded = function(animationsCSV) {
+        const anims = animationsCSV.split(",").filter(Boolean);
         const container = document.getElementById("monster-anims");
         if (!container) return;
 

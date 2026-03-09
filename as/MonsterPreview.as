@@ -6,8 +6,8 @@ package
    import flash.events.IOErrorEvent;
    import flash.events.SecurityErrorEvent;
    import flash.geom.Rectangle;
+   import flash.external.ExternalInterface;
    import flash.net.URLRequest;
-   import flash.net.navigateToURL;
    import flash.system.ApplicationDomain;
    import flash.system.LoaderContext;
 
@@ -32,16 +32,16 @@ package
          trace("[MonsterPreview] Constructor complete");
       }
 
-      public function getLabels() : String
+      public function getAnimations() : String
       {
          if (monsterMC == null) return "";
-         var labelNames:Array = [];
-         var labels:Array = monsterMC.currentLabels;
-         for (var i:int = 0; i < labels.length; i++)
+         var animationNames:Array = [];
+         var frames:Array = monsterMC.currentLabels;
+         for (var i:int = 0; i < frames.length; i++)
          {
-            labelNames.push(labels[i].name);
+            animationNames.push(frames[i].name);
          }
-         return labelNames.join(",");
+         return animationNames.join(",");
       }
 
       public function loadMonster(sFile:String, sSymbol:String, initialAnim:String = "") : void
@@ -70,7 +70,7 @@ package
             trace("[MonsterPreview] playAnim: monsterMC not loaded yet");
             return;
          }
-         if (hasLabel(anim))
+         if (hasAnimation(anim))
          {
             trace("[MonsterPreview] Playing anim: " + anim);
             monsterMC.gotoAndPlay(anim);
@@ -81,28 +81,22 @@ package
          }
       }
 
-      private function hasLabel(anim:String) : Boolean
+      private function hasAnimation(anim:String) : Boolean
       {
-         var labels:Array = monsterMC.currentLabels;
-         for (var i:int = 0; i < labels.length; i++)
+         var frames:Array = monsterMC.currentLabels;
+         for (var i:int = 0; i < frames.length; i++)
          {
-            if (labels[i].name == anim) return true;
+            if (frames[i].name == anim) return true;
          }
          return false;
       }
 
-      private function notifyLabelsToJS(labelsCSV:String) : void
+      private function notifyAnimations(animationsCSV:String) : void
       {
-         var js:String = "javascript:window.onMonsterLabelsLoaded && window.onMonsterLabelsLoaded('" + labelsCSV + "')";
-         try
-         {
-            navigateToURL(new URLRequest(js), "_self");
-            trace("[MonsterPreview] Labels sent to JS: " + labelsCSV);
-         }
-         catch (err:Error)
-         {
-            trace("[MonsterPreview] navigateToURL failed: " + err.message);
-         }
+         if (!ExternalInterface.available) { return; }
+
+         ExternalInterface.call("onMonsterAnimationsLoaded", animationsCSV);
+         trace("[MonsterPreview] Animations sent: " + animationsCSV);
       }
 
       private function onOpen(e:Event) : void
@@ -142,14 +136,14 @@ package
          }
 
          monsterMC = mc;
-         logLabels(mc);
+         logAnimations(mc);
 
          mcStage.addChild(mc);
          fitAndCenter(mc);
 
          stage.addEventListener(Event.RESIZE, onStageResize, false, 0, true);
 
-         notifyLabelsToJS(getLabels());
+         notifyAnimations(getAnimations());
 
          if (sAnim != "")
          {
@@ -193,13 +187,13 @@ package
          }
       }
 
-      private function logLabels(mc:MovieClip) : void
+      private function logAnimations(mc:MovieClip) : void
       {
-         var labels:Array = mc.currentLabels;
-         trace("[MonsterPreview] Found " + labels.length + " animation labels:");
-         for (var i:int = 0; i < labels.length; i++)
+         var frames:Array = mc.currentLabels;
+         trace("[MonsterPreview] Found " + frames.length + " animations:");
+         for (var i:int = 0; i < frames.length; i++)
          {
-            trace("[MonsterPreview]   [" + i + "] " + labels[i].name + " (frame " + labels[i].frame + ")");
+            trace("[MonsterPreview]   [" + i + "] " + frames[i].name + " (frame " + frames[i].frame + ")");
          }
       }
 
