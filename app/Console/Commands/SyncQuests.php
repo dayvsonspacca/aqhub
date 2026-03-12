@@ -13,7 +13,9 @@ use AqwSocketClient\Objects\Names\PlayerName;
 use AqwSocketClient\Scripts\LoginScript;
 use DateTimeImmutable;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use RuntimeException;
+use Throwable;
 
 class SyncQuests extends Command
 {
@@ -51,28 +53,45 @@ class SyncQuests extends Command
         $total = $to - $from + 1;
         $found = 0;
         $skipped = 0;
+        $errors = 0;
 
         $this->info("Scanning quest IDs {$from}–{$to} ({$total} total)...");
         $bar = $this->output->createProgressBar($total);
         $bar->start();
 
         for ($id = $from; $id <= $to; $id++) {
-            $script = new FindQuestScript(new QuestIdentifier($id), $areaId);
-            $script->expiresAt(new DateTimeImmutable("+{$timeout} seconds"));
+            $disconnected = false;
 
-            $client->run($script);
+            try {
+                $script = new FindQuestScript(new QuestIdentifier($id), $areaId);
+                $script->expiresAt(new DateTimeImmutable("+{$timeout} seconds"));
 
-            if ($script->result() === ScriptResult::Disconnected) {
+                $client->run($script);
+
+                if ($script->result() === ScriptResult::Disconnected) {
+                    $disconnected = true;
+                } elseif ($script->result() === ScriptResult::Success && $script->quest() !== null) {
+                    $upsertQuest->handle($script->quest());
+                    $found++;
+                } else {
+                    $skipped++;
+                }
+            } catch (Throwable $e) {
+                $errors++;
+                Log::channel('sync-quests')->error("Quest ID {$id} failed.", [
+                    'quest_id' => $id,
+                    'exception' => $e::class,
+                    'message' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine(),
+                    'trace' => $e->getTraceAsString(),
+                ]);
+            }
+
+            if ($disconnected) {
                 $bar->finish();
                 $this->newLine();
                 throw new RuntimeException('Disconnected from server at quest ID ' . $id . '.');
-            }
-
-            if ($script->result() === ScriptResult::Success && $script->quest() !== null) {
-                $upsertQuest->handle($script->quest());
-                $found++;
-            } else {
-                $skipped++;
             }
 
             $bar->advance();
@@ -82,7 +101,11 @@ class SyncQuests extends Command
         $client->disconnect();
 
         $this->newLine();
-        $this->info("Done. Found: {$found} | Skipped: {$skipped}");
+        $this->info("Done. Found: {$found} | Skipped: {$skipped} | Errors: {$errors}");
+
+        if ($errors > 0) {
+            $this->warn('Errors logged to storage/logs/sync-quests.log');
+        }
 
         return Command::SUCCESS;
     }
