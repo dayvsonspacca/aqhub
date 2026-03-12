@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Casts\Monster;
+namespace Tests\Unit\Casts\Quest;
 
-use App\Casts\Monster\MonsterNameCast;
-use AqwSocketClient\Objects\Names\MonsterName;
+use App\Casts\Quest\QuestNameCast;
+use AqwSocketClient\Objects\Names\QuestName;
 use Illuminate\Database\Eloquent\Model;
 use PHPUnit\Framework\Attributes\Test;
 use Psl\Type\Exception\AssertException;
 use Tests\TestCase;
 
-final class MonsterNameCastTest extends TestCase
+final class QuestNameCastTest extends TestCase
 {
-    private MonsterNameCast $cast;
+    private QuestNameCast $cast;
 
     private Model $model;
 
@@ -21,20 +21,20 @@ final class MonsterNameCastTest extends TestCase
     {
         parent::setUp();
 
-        $this->cast = new MonsterNameCast;
+        $this->cast = new QuestNameCast;
         $this->model = new class extends Model
         {
-            protected $table = 'monsters';
+            protected $table = 'quests';
         };
     }
 
     #[Test]
-    public function it_returns_name_object_from_database_value(): void
+    public function it_returns_quest_name_object_from_database_value(): void
     {
-        $name = $this->cast->get($this->model, 'name', 'Red Dragon', []);
+        $name = $this->cast->get($this->model, 'name', 'The Dragon Hunt', []);
 
-        $this->assertInstanceOf(MonsterName::class, $name);
-        $this->assertSame('Red Dragon', $name->value);
+        $this->assertInstanceOf(QuestName::class, $name);
+        $this->assertSame('The Dragon Hunt', $name->value);
     }
 
     #[Test]
@@ -46,13 +46,13 @@ final class MonsterNameCastTest extends TestCase
     }
 
     #[Test]
-    public function it_accepts_name_object(): void
+    public function it_accepts_quest_name_object(): void
     {
-        $nameObject = new MonsterName('Red Dragon');
+        $nameObject = new QuestName('The Dragon Hunt');
 
         $result = $this->cast->set($this->model, 'name', $nameObject, []);
 
-        $this->assertSame('Red Dragon', $result);
+        $this->assertSame('The Dragon Hunt', $result);
     }
 
     #[Test]

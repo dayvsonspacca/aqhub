@@ -7,8 +7,9 @@ namespace Tests\Unit\Casts\Monster;
 use App\Casts\Monster\MonsterLevelCast;
 use AqwSocketClient\Objects\Levels\MonsterLevel;
 use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
+use Psl\Exception\InvariantViolationException;
+use Psl\Type\Exception\AssertException;
 use Tests\TestCase;
 
 final class MonsterLevelCastTest extends TestCase
@@ -75,7 +76,7 @@ final class MonsterLevelCastTest extends TestCase
     #[Test]
     public function it_validates_integer_value(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvariantViolationException::class);
 
         $this->cast->set($this->model, 'level', 256, []);
     }
@@ -83,7 +84,7 @@ final class MonsterLevelCastTest extends TestCase
     #[Test]
     public function it_throws_exception_for_invalid_low_value(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(AssertException::class);
 
         $this->cast->set($this->model, 'level', 0, []);
     }

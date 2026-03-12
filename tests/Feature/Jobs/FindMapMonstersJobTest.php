@@ -63,7 +63,8 @@ final class FindMapMonstersJobTest extends TestCase
         $socket
             ->queueResponse(MessageGenerator::domainPolicy())
             ->queueResponse(MessageGenerator::loginReponded($player, new SocketIdentifier(123)))
-            ->queueResponse(MessageGenerator::moveToArea(new AreaName('battleon'), new AreaIdentifier(1)));
+            ->queueResponse(MessageGenerator::moveToArea(new AreaName('battleon'), new AreaIdentifier(1)))
+            ->queueResponse(MessageGenerator::loadInventory());
     }
 
     #[Test]
@@ -114,9 +115,7 @@ final class FindMapMonstersJobTest extends TestCase
         $this->fakeToken();
 
         $this->queueLoginResponses($socket);
-        $socket
-            ->queueResponse(MessageGenerator::loadInventory())
-            ->queueResponse(MessageGenerator::monstersDetected());
+        $socket->queueResponse(MessageGenerator::monstersDetected());
 
         $map = Map::factory()->create();
 
@@ -153,9 +152,7 @@ final class FindMapMonstersJobTest extends TestCase
         $this->fakeToken();
 
         $this->queueLoginResponses($socket);
-        $socket
-            ->queueResponse(MessageGenerator::loadInventory())
-            ->queueResponse(MessageGenerator::areaLocked());
+        $socket->queueResponse(MessageGenerator::areaLocked());
 
         $map = Map::factory()->create();
 

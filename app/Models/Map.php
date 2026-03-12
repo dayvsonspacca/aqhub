@@ -78,4 +78,9 @@ class Map extends Model
             'map_monster_assignments'
         );
     }
+
+    public function quests(): BelongsToMany
+    {
+        return $this->belongsToMany(Quest::class, 'quest_map_assignments');
+    }
 }

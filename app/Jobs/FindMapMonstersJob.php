@@ -44,8 +44,6 @@ class FindMapMonstersJob implements ShouldQueue
 
         $login = new LoginScript($player, $api->token($player, $password));
 
-        $login->expiresAt(new DateTimeImmutable('+15 seconds'));
-
         $client->connect();
         $client->run($login);
 

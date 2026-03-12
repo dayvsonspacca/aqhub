@@ -14,12 +14,12 @@ use AqwSocketClient\Events\AreaMemberOnlyEvent;
 use AqwSocketClient\Events\AreaNotAvaliableEvent;
 use AqwSocketClient\Events\MonstersDetectedEvent;
 use AqwSocketClient\Events\PlayerDetectedEvent;
-use AqwSocketClient\Events\PlayerInventoryLoadedEvent;
 use AqwSocketClient\Helpers\MessageGenerator;
 use AqwSocketClient\Objects\Identifiers\RoomIdentifier;
-use AqwSocketClient\Objects\Monster;
+use AqwSocketClient\Objects\Monster\Monster;
 use AqwSocketClient\Objects\Names\AreaName;
 use AqwSocketClient\Objects\Names\PlayerName;
+use AqwSocketClient\Scripts\ClientContext;
 use AqwSocketClient\Server;
 use AqwSocketClient\Sockets\FakeSocket;
 use DateTimeImmutable;
@@ -52,7 +52,6 @@ final class FindMapMonstersScriptTest extends TestCase
     {
         $this->client->connect();
 
-        $this->socket->queueResponse(MessageGenerator::loadInventory());
         $this->socket->queueResponse(MessageGenerator::areaLocked());
         $this->client->run($this->script);
 
@@ -60,11 +59,10 @@ final class FindMapMonstersScriptTest extends TestCase
     }
 
     #[Test]
-    public function it_expects_6_events(): void
+    public function it_expects_5_events(): void
     {
-        $this->assertCount(6, $this->script->handles());
+        $this->assertCount(5, $this->script->handles());
 
-        $this->assertContains(PlayerInventoryLoadedEvent::class, $this->script->handles());
         $this->assertContains(MonstersDetectedEvent::class, $this->script->handles());
         $this->assertContains(AreaLockedEvent::class, $this->script->handles());
         $this->assertContains(AreaMemberOnlyEvent::class, $this->script->handles());
@@ -73,11 +71,10 @@ final class FindMapMonstersScriptTest extends TestCase
     }
 
     #[Test]
-    public function it_send_join_area_command_on_player_inventory_load(): void
+    public function it_send_join_area_command_on_start(): void
     {
         $this->client->connect();
 
-        $this->socket->queueResponse(MessageGenerator::loadInventory());
         $this->socket->queueResponse(MessageGenerator::monstersDetected());
         $this->client->run($this->script);
 
@@ -90,7 +87,6 @@ final class FindMapMonstersScriptTest extends TestCase
     {
         $this->client->connect();
 
-        $this->socket->queueResponse(MessageGenerator::loadInventory());
         $this->socket->queueResponse(MessageGenerator::monstersDetected());
         $this->client->run($this->script);
 
@@ -114,6 +110,6 @@ final class FindMapMonstersScriptTest extends TestCase
     #[Test]
     public function it_defaults_to_non_commands_when_no_related_event(): void
     {
-        $this->assertEmpty($this->script->handle(new PlayerDetectedEvent($this->player)));
+        $this->assertNull($this->script->handle(new PlayerDetectedEvent($this->player), new ClientContext));
     }
 }

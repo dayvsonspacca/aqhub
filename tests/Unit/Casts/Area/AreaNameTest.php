@@ -7,8 +7,8 @@ namespace Tests\Unit\Casts\Area;
 use App\Casts\Area\AreaNameCast;
 use AqwSocketClient\Objects\Names\AreaName;
 use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
+use Psl\Type\Exception\AssertException;
 use Tests\TestCase;
 
 final class AreaNameTest extends TestCase
@@ -58,7 +58,7 @@ final class AreaNameTest extends TestCase
     #[Test]
     public function it_validates_string_value(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(AssertException::class);
 
         $this->cast->set($this->model, 'name', '', []);
     }

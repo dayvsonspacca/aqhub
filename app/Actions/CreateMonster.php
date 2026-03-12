@@ -7,8 +7,8 @@ namespace App\Actions;
 use App\Actions\Contracts\CreateMonsterContract;
 use App\Models\Monster;
 use AqwSocketClient\Objects\GameFileMetadata;
-use AqwSocketClient\Objects\Health;
 use AqwSocketClient\Objects\Levels\MonsterLevel;
+use AqwSocketClient\Objects\Monster\Health;
 use AqwSocketClient\Objects\Names\MonsterName;
 
 final class CreateMonster implements CreateMonsterContract

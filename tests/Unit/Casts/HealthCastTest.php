@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Tests\Unit\Casts;
 
 use App\Casts\HealthCast;
-use AqwSocketClient\Objects\Health;
+use AqwSocketClient\Objects\Monster\Health;
 use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
+use Psl\Exception\InvariantViolationException;
 use Tests\TestCase;
 
 final class HealthCastTest extends TestCase
@@ -58,7 +58,7 @@ final class HealthCastTest extends TestCase
     #[Test]
     public function it_validates_health(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(InvariantViolationException::class);
 
         $this->cast->set($this->model, 'health', -2, []);
     }

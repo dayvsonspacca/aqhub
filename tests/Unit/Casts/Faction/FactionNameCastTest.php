@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Casts\Monster;
+namespace Tests\Unit\Casts\Faction;
 
-use App\Casts\Monster\MonsterNameCast;
-use AqwSocketClient\Objects\Names\MonsterName;
+use App\Casts\Faction\FactionNameCast;
+use AqwSocketClient\Objects\Names\FactionName;
 use Illuminate\Database\Eloquent\Model;
 use PHPUnit\Framework\Attributes\Test;
 use Psl\Type\Exception\AssertException;
 use Tests\TestCase;
 
-final class MonsterNameCastTest extends TestCase
+final class FactionNameCastTest extends TestCase
 {
-    private MonsterNameCast $cast;
+    private FactionNameCast $cast;
 
     private Model $model;
 
@@ -21,20 +21,20 @@ final class MonsterNameCastTest extends TestCase
     {
         parent::setUp();
 
-        $this->cast = new MonsterNameCast;
+        $this->cast = new FactionNameCast;
         $this->model = new class extends Model
         {
-            protected $table = 'monsters';
+            protected $table = 'factions';
         };
     }
 
     #[Test]
-    public function it_returns_name_object_from_database_value(): void
+    public function it_returns_faction_name_object_from_database_value(): void
     {
-        $name = $this->cast->get($this->model, 'name', 'Red Dragon', []);
+        $name = $this->cast->get($this->model, 'name', 'Doomwood', []);
 
-        $this->assertInstanceOf(MonsterName::class, $name);
-        $this->assertSame('Red Dragon', $name->value);
+        $this->assertInstanceOf(FactionName::class, $name);
+        $this->assertSame('Doomwood', $name->value);
     }
 
     #[Test]
@@ -46,13 +46,13 @@ final class MonsterNameCastTest extends TestCase
     }
 
     #[Test]
-    public function it_accepts_name_object(): void
+    public function it_accepts_faction_name_object(): void
     {
-        $nameObject = new MonsterName('Red Dragon');
+        $nameObject = new FactionName('Doomwood');
 
         $result = $this->cast->set($this->model, 'name', $nameObject, []);
 
-        $this->assertSame('Red Dragon', $result);
+        $this->assertSame('Doomwood', $result);
     }
 
     #[Test]
