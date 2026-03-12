@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property-read int $id
  * @property-read int $aqw_id
- * @property-read FactionName $name
+ * @property-read ?FactionName $name
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
