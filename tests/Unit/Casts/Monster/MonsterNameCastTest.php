@@ -7,8 +7,8 @@ namespace Tests\Unit\Casts\Monster;
 use App\Casts\Monster\MonsterNameCast;
 use AqwSocketClient\Objects\Names\MonsterName;
 use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 use PHPUnit\Framework\Attributes\Test;
+use Psl\Type\Exception\AssertException;
 use Tests\TestCase;
 
 final class MonsterNameCastTest extends TestCase
@@ -58,7 +58,7 @@ final class MonsterNameCastTest extends TestCase
     #[Test]
     public function it_validates_string_value(): void
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(AssertException::class);
 
         $this->cast->set($this->model, 'name', '', []);
     }

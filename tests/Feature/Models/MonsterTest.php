@@ -3,8 +3,8 @@
 namespace Tests\Feature\Models;
 
 use App\Models\Monster;
-use AqwSocketClient\Objects\Health;
 use AqwSocketClient\Objects\Levels\MonsterLevel;
+use AqwSocketClient\Objects\Monster\Health;
 use AqwSocketClient\Objects\Names\MonsterName;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

@@ -10,12 +10,13 @@ use AqwSocketClient\Events\AreaLockedEvent;
 use AqwSocketClient\Events\AreaMemberOnlyEvent;
 use AqwSocketClient\Events\AreaNotAvaliableEvent;
 use AqwSocketClient\Events\MonstersDetectedEvent;
-use AqwSocketClient\Events\PlayerInventoryLoadedEvent;
+use AqwSocketClient\Interfaces\CommandInterface;
 use AqwSocketClient\Interfaces\EventInterface;
 use AqwSocketClient\Objects\Identifiers\RoomIdentifier;
-use AqwSocketClient\Objects\Monster;
+use AqwSocketClient\Objects\Monster\Monster;
 use AqwSocketClient\Objects\Names\AreaName;
 use AqwSocketClient\Objects\Names\PlayerName;
+use AqwSocketClient\Scripts\ClientContext;
 use AqwSocketClient\Scripts\ExpirableScript;
 
 class FindMapMonstersScript extends ExpirableScript
@@ -32,10 +33,14 @@ class FindMapMonstersScript extends ExpirableScript
         private AreaName $area
     ) {}
 
+    public function start(ClientContext $context): ?CommandInterface
+    {
+        return new JoinAreaCommand($this->player, $this->area, new RoomIdentifier(55555));
+    }
+
     public function handles(): array
     {
         return [
-            PlayerInventoryLoadedEvent::class, // ENTRY POINT
             MonstersDetectedEvent::class,
             AreaLockedEvent::class,
             AreaMemberOnlyEvent::class,
@@ -44,27 +49,23 @@ class FindMapMonstersScript extends ExpirableScript
         ];
     }
 
-    public function handle(EventInterface $event): array
+    public function handle(EventInterface $event, ClientContext $context): ?CommandInterface
     {
         if ($event instanceof AreaLockedEvent || $event instanceof AreaMemberOnlyEvent || $event instanceof AreaNotAvaliableEvent || $event instanceof AlreadyInAreaEvent) {
             $this->failed();
             $this->failedBy = $event;
 
-            return [];
-        }
-
-        if ($event instanceof PlayerInventoryLoadedEvent) {
-            return [new JoinAreaCommand($this->player, $this->area, new RoomIdentifier(55555))];
+            return null;
         }
 
         if ($event instanceof MonstersDetectedEvent) {
             $this->success();
             $this->monsters = $event->monsters;
 
-            return [];
+            return null;
         }
 
-        return [];
+        return null;
     }
 
     /**
