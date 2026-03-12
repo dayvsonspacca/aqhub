@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('aqw_id')->unique();
             $table->string('name');
             $table->text('description');
-            $table->text('completion_text');
+            $table->text('completion_text')->nullable();
             $table->timestamps();
         });
     }
