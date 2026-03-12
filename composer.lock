@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dfd815c3b1345c0a6402c59a63c5f543",
+    "content-hash": "375ef7a3ab241ada4cd166925a828b3c",
     "packages": [
         {
             "name": "azjezz/psl",
@@ -364,16 +364,16 @@
         },
         {
             "name": "dayvsonspacca/aqw-socket-client",
-            "version": "v6.0.0",
+            "version": "v6.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dayvsonspacca/aqw-socket-client.git",
-                "reference": "faeda97f8bc3986e9acf19e8bc4536a6df3fbd16"
+                "reference": "93cdf2e371693d8f25c632ecb3eb5f6209aab7dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dayvsonspacca/aqw-socket-client/zipball/faeda97f8bc3986e9acf19e8bc4536a6df3fbd16",
-                "reference": "faeda97f8bc3986e9acf19e8bc4536a6df3fbd16",
+                "url": "https://api.github.com/repos/dayvsonspacca/aqw-socket-client/zipball/93cdf2e371693d8f25c632ecb3eb5f6209aab7dd",
+                "reference": "93cdf2e371693d8f25c632ecb3eb5f6209aab7dd",
                 "shasum": ""
             },
             "require": {
@@ -402,9 +402,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dayvsonspacca/aqw-socket-client/issues",
-                "source": "https://github.com/dayvsonspacca/aqw-socket-client/tree/v6.0.0"
+                "source": "https://github.com/dayvsonspacca/aqw-socket-client/tree/v6.0.1"
             },
-            "time": "2026-03-12T12:59:15+00:00"
+            "time": "2026-03-12T17:31:17+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read int $aqw_id
  * @property-read QuestName $name
  * @property-read string $description
- * @property-read string $completion_text
+ * @property-read ?string $completion_text
  * @property-read CarbonInterface $created_at
  * @property-read CarbonInterface $updated_at
  */
