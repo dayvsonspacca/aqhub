@@ -86,4 +86,12 @@ final class MapTest extends TestCase
         $this->assertTrue(method_exists($map, 'region'));
         $this->assertInstanceOf(BelongsTo::class, $map->region());
     }
+
+    #[Test]
+    public function it_has_quests_relationship(): void
+    {
+        $map = Map::factory()->create();
+
+        $this->assertInstanceOf(BelongsToMany::class, $map->quests());
+    }
 }
