@@ -16,6 +16,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @property-read int $id
+ * @property-read ?int $aqw_id
  * @property-read MonsterName $name
  * @property-read MonsterLevel $level
  * @property-read Health $health
@@ -35,6 +36,7 @@ class Monster extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'aqw_id',
         'name',
         'level',
         'health',
@@ -51,6 +53,7 @@ class Monster extends Model
     {
         return [
             'id' => 'integer',
+            'aqw_id' => 'integer',
             'name' => MonsterNameCast::class,
             'level' => MonsterLevelCast::class,
             'health' => HealthCast::class,

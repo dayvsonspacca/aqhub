@@ -34,6 +34,7 @@ class MonsterFactory extends Factory
         $assetIndex = fake()->numberBetween(1, 5);
 
         return [
+            'aqw_id' => fake()->unique()->numberBetween(1, 999999),
             'name' => $fullName,
             'level' => fake()->numberBetween(1, 100),
             'health' => fake()->numberBetween(100, 15000),

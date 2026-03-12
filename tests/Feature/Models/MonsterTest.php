@@ -20,6 +20,7 @@ final class MonsterTest extends TestCase
     public function it_has_fillable_attributes(): void
     {
         $fillable = [
+            'aqw_id',
             'name',
             'level',
             'health',
@@ -88,5 +89,13 @@ final class MonsterTest extends TestCase
 
         $this->assertTrue(method_exists($monster, 'maps'));
         $this->assertInstanceOf(BelongsToMany::class, $monster->maps());
+    }
+
+    #[Test]
+    public function it_has_aqw_id(): void
+    {
+        $monster = Monster::factory()->create(['aqw_id' => 42]);
+
+        $this->assertSame(42, $monster->aqw_id);
     }
 }
